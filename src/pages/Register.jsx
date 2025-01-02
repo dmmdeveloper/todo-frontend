@@ -108,7 +108,7 @@ reader.onload = ()=>{
 <button  className='h-[40px] w-full border hover:text-myHalfWhite mt-10 rounded-md text-xl hover:border-[2px] duration-100' >Login</button>
 <p className='text-end pr-2  w-full'  >
 <Link to='/login' className='text-myHalfWhite decoration-myHalfWhite hover:text-myWhite hover:underline-offset-3 hover:tracking-wide duration-150 underline'>
-  login
+  Signup
 </Link>
 
 </p>
