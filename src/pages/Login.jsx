@@ -21,7 +21,7 @@ const [showPassword ,setShowPassword] = useState(false)
 <div className="mt-10 flex  flex-col  gap-7">
 
 <div className="">
-<input className='w-full h-[40px] border border-t-0 border-r-0 focus:outline-none focus:border-b-2 focus:border-l-2 focus:bg-myBlue outline-none bg-myBlue p-2 placeholder:text-[#ffffffa5]' type="text" placeholder='Type email'  />
+<input className='w-full h-[40px] border border-t-0 border-r-0 focus:outline-none focus:border-b-2 focus:border-l-2 focus:bg-myBlue outline-none bg-myBlue p-2 placeholder:text-[#ffffffa5]' type="email" placeholder='Type email'  />
 </div>
 
 
