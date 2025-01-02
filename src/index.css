@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root{
+    --blue : #2C8FFF;
+    --white : #ffffff;
+    --half-white : rgba(255, 255, 255,0.7);
+    
+}
+
+
+@layer base {
+    /* Set global styles */
+    * {
+      @apply text-[#ffffff]; /* Remove margin, padding, and use box-sizing: border-box */
+    }
+}
