@@ -90,12 +90,6 @@ reader.onload = ()=>{
 
       }
     </div>
-
-
-
-
-
-
 </div>
 
 
@@ -110,16 +104,8 @@ reader.onload = ()=>{
 <Link to='/login' className='text-myHalfWhite decoration-myHalfWhite hover:text-myWhite hover:underline-offset-3 hover:tracking-wide duration-150 underline'>
   login
 </Link>
-
 </p>
-
 </div>
-
-
-
-
-
-
 
 </form>
 
