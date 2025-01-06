@@ -42,6 +42,7 @@ const respose  =  await axios.post(`https://todo-server-six-ashen.vercel.app/use
   }
 })
 const data = await respose.data;
+localStorage.setItem("token",data?.data?.token)
 console.log( "Data", data);  
 toast.success(data.message)
 } catch (error) {
@@ -162,7 +163,7 @@ reader.onload = ()=>{
     loading ?
     <div 
     className="h-[30px] w-[30px] border-4 border-t-transparent border-myHalfWhite rounded-full animate-spin"
-  ></div>:
+  ></div> :
   <span className="ml-2">Signup</span>
 
   }

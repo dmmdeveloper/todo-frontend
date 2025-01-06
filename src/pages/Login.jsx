@@ -23,7 +23,7 @@ const handleInput = (e)=>{
   setFormData( (prev) => ( { ...prev , [name] : value}))
   
 }
-console.log(formData);
+// console.log(formData);
 
 const handleSubmit = async (e)=>{
 
@@ -43,8 +43,10 @@ const response = await axios.post(`https://todo-server-six-ashen.vercel.app/user
   }
 })
 const data  = await response.data;
-console.log(data);
+console.log(data.data.token);
 toast.success(data.message)
+
+localStorage.setItem("token" , data?.data?.token)
 
   } catch (error) {
     console.log("Form Not Submitted ::" , error);
