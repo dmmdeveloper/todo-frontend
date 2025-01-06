@@ -4,7 +4,7 @@ import Login from "./pages/Login"
 import NotFound from "./pages/NotFound"
 import Register from "./pages/Register"
 import SelectMode from "./pages/SelectMode"
-
+import {Toaster} from "react-hot-toast"
 function App() {
 
 return (<>
@@ -17,7 +17,7 @@ return (<>
 <Route path="*" element={<NotFound/>} />
 
 </Routes>
-
+<Toaster/>
 
 
 </>)

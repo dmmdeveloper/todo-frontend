@@ -2,19 +2,21 @@ import React from 'react'
 
 export default function SelectMode() {
   return (
-<div className="min-h-screen h-auto w-full bg-myBlue pb-7 ">
+<div className="min-h-screen h-auto w-full bg-myBlue ">
 
-<h1 className='text-center text-3xl md:pt-9 md:pb-9 pt-2' > Select tasking mode</h1>
+<h1 className='text-center text-3xl md:pt-3 md:pb-3 pt-2' > Select tasking mode</h1>
 
-<div className=" md:flex md:justify-center  gap-10 md:mt-3 min-h-screen h-auto w-[90%] md:w-[70%] m-auto">
+<div className=" md:flex md:justify-center  gap-10 md:mt-1 min-h-[80%] h-auto w-[90%] md:w-[70%] m-auto">
 
 
 <div className=" h-auto w-full md:w-[300px] md:m-0 m-auto mt-7">
 
-<button className='bg-myWhite text-myBlue w-full h-[40px] text-2xl'   >General Mode</button>
+
+<button className='bg-myWhite text-myBlue w-full h-[40px] text-2xl select-none'   >General Mode</button>
 
 <div className="min-h-[400px] h-auto w-full m-auto border mt-3 rounded-md p-3">
-<h1 className='text-center text-2xl select-none ' >Your Tasks</h1>
+<h2 className='text-center text-2xl select-none ' >Your Tasks</h2>
+
 
 <div className="h-[40px] w-full border flex justify-between items-center p-1 mt-3">
     <p className='text-myHalfWhite select-none' >add task..</p>
@@ -22,7 +24,9 @@ export default function SelectMode() {
 </div>
 
 {/* items  Div*/}
+
 <div className="mt-5 p-1">
+
 
 {/* Item */}
 
@@ -49,7 +53,7 @@ export default function SelectMode() {
     <label className={`select-none leading-4 ${t.completed?"text-myHalfWhite":""}`} htmlFor="">{t.text}
     </label>
     </div>
-    <p className='text-[12px] text-myHalfWhite' >{t.createdAt}</p>
+    <p className='text-[12px] text-myHalfWhite select-none' >{t.createdAt}</p>
 
     </div>
     </div>  
@@ -76,19 +80,22 @@ export default function SelectMode() {
 
 
 
-{/* General mode div */}
-<div className=" h-auto w-full md:w-[300px] md:m-0 m-auto mt-7">
+{/* Collection mode div */}
+<div className=" h-auto w-full md:w-[300px] md:m-0 m-auto mt-7 pb-4">
 
-<button className='bg-myWhite text-myBlue w-full h-[40px] text-2xl'   >General Mode</button>
+
+
+<button className='bg-myWhite text-myBlue w-full h-[40px] text-2xl select-none'   >Collection Mode</button>
 
 
 <div className="min-h-[400px] h-auto w-full m-auto border mt-3 rounded-md p-3">
-<h1 className='text-center text-2xl select-none ' >Collections Mode</h1>
+<h2 className='text-center text-2xl select-none ' >Collections Mode</h2>
 
 
 <div className="mt-6">
 
 {/* Items div */}
+
 {
     todosCollection.map((t)=>{
         return(<>
@@ -97,10 +104,10 @@ export default function SelectMode() {
 
 <div className="flex items-center gap-2">
 
-<div className="h-[40px] w-[40px] rounded-full border flex justify-center items-center "><p>{t.completed}/{t.total}</p></div>
+<div className="h-[40px] w-[40px] rounded-full select-none border flex justify-center items-center "><p>{t.completed}/{t.total}</p></div>
 <div className="">
-<h2 className='text-xl'>{t.text}</h2>
-<p className='text-[10px] text-myHalfWhite' >{t.createdAt}</p>
+<h2 className='text-xl select-none'>{t.text}</h2>
+<p className='text-[10px] text-myHalfWhite select-none' >{t.createdAt}</p>
 </div>
 </div>
 
@@ -135,17 +142,9 @@ export default function SelectMode() {
 
 </div>
 
-
-
 </div>
   )
 }
-
-
-
-
-
-
 const todos = [
     // {
     //   id: 1,
@@ -189,8 +188,7 @@ const todos = [
       completed: true,
       createdAt: "02:44 PM | 02-01-2024",
     },
-  ];
-  
+  ]; 
   const todosCollection = [
     // {
     //   id: 1,
@@ -243,5 +241,4 @@ const todos = [
     },
   ];
   
-  console.log(todos);
     
