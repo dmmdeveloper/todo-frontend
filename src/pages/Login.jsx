@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import toast from 'react-hot-toast'
 import { data, Link } from 'react-router-dom'
 
 export default function Login() {
@@ -13,27 +14,29 @@ const [formData , setFormData]= useState({
   password :""
 
 })
+const [ loading , setLoading] = useState(false)
 
 
 const handleInput = (e)=>{
-
   e.preventDefault()
   const {name  , value} = e.target; 
   setFormData( (prev) => ( { ...prev , [name] : value}))
-  console.log(formData);
   
 }
+console.log(formData);
 
 const handleSubmit = async (e)=>{
 
+
   e.preventDefault();
   try {
+    setLoading(true)
 
 const dataSendTo = new FormData();
 dataSendTo.append("email", formData.email)
 dataSendTo.append("password" , formData.password);
 
-const response = await axios.post(`https://todo-server-six-ashen.vercel.app//user/login` , dataSendTo , {
+const response = await axios.post(`http://localhost:2000/user/login` , dataSendTo , {
   withCredentials : true ,
   headers : {
     "Content-Type":"multipart/form-data"
@@ -41,10 +44,13 @@ const response = await axios.post(`https://todo-server-six-ashen.vercel.app//use
 })
 const data  = await response.data;
 console.log(data);
+toast.success(data.message)
 
   } catch (error) {
     console.log("Form Not Submitted ::" , error);
-  }
+    if(error?.response?.data) toast.error(error?.response?.data?.message)
+
+  }finally{ setLoading(false)}
 }
 
 
@@ -94,7 +100,15 @@ console.log(data);
 <div className="">
 
 
-<button type='submit'  className='h-[40px] w-full border hover:text-myHalfWhite mt-10 rounded-md text-xl hover:border-[2px] duration-100' >Login</button>
+<button type='submit'  className='h-[40px] w-full border hover:text-myHalfWhite mt-10 rounded-md text-xl hover:border-[2px] duration-100 flex justify-center items-center' >
+{
+  loading?
+  <div 
+  className="h-[30px] w-[30px] border-4 border-t-transparent border-myHalfWhite rounded-full animate-spin"
+></div> 
+:<span>Login</span>
+}  
+  </button>
 <p className='text-end pr-2  w-full'  >
 <Link to='/register' className='text-myHalfWhite decoration-myHalfWhite hover:text-myWhite hover:underline-offset-3 hover:tracking-wide duration-150 underline'>
   signup
