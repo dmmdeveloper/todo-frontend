@@ -4,13 +4,19 @@ import { createContext, useContext } from "react";
 
 const AppContext = createContext(
 {
-    hello : ()=>{}
+    profile : [], 
+    setProfile :()=>{},
+    fetchProfile : ()=>{},
+    changeMode : (mode)=>{},
+    modeLoading :false,
+    // setModeLoading : ()=>{}
+    
 });
 
 
-const AppContextProvider = AppContext.Provider;
+export const AppContextProvider = AppContext.Provider;
 
-const useAppContext = ()=>{
+export const useAppContext = ()=>{
     return useContext(AppContext)
 }
 

@@ -1,18 +1,60 @@
-import React from 'react'
+import axios from 'axios';
+import { useState } from 'react';
+import { useAppContext } from '../context/AppContex';
+
+
 
 export default function SelectMode() {
+const [loading , setLoading] = useState(false);
+const { changeMode , modeLoading } = useAppContext()
+
+// const chanageMode =async (mode ="general")=>{
+
+// try {
+//   setLoading(true)
+// const response = await axios.post(`http://localhost:2000/user/mode`  , { mode} , {
+//   withCredentials :true ,
+//   headers :{
+//     "Content-Type" :"application/json"
+//   }
+// })
+
+// const data = await response.data;
+// console.log(data);
+
+// if( data ){
+//   localStorage.setItem("mode" , mode)
+// }
+// } catch (error) {
+//   console.log("Mode not Changed"  , error);
+// }finally{
+//   setLoading(false)
+// }
+//   }
+
   return (
 <div className="min-h-screen h-auto w-full bg-myBlue ">
 
+{/* .locaidng_part */}
+
+{
+  modeLoading?
+<div className="h-screen w-full backdrop-blur-sm fixed top-0 flex justify-center items-center">
+<div 
+  className="h-[300px] w-[300px] border-4 border-t-transparent border-myHalfWhite rounded-full animate-spin"
+></div> 
+</div>
+:""
+}
+
+
+
 <h1 className='text-center text-3xl md:pt-3 md:pb-3 pt-2' > Select tasking mode</h1>
-
 <div className=" md:flex md:justify-center  gap-10 md:mt-1 min-h-[80%] h-auto w-[90%] md:w-[70%] m-auto">
-
 
 <div className=" h-auto w-full md:w-[300px] md:m-0 m-auto mt-7">
 
-
-<button className='bg-myWhite text-myBlue w-full h-[40px] text-2xl select-none'   >General Mode</button>
+<button onClick={()=>changeMode("general")} className='bg-myWhite text-myBlue w-full h-[40px] text-2xl select-none'   >General Mode</button>
 
 <div className="min-h-[400px] h-auto w-full m-auto border mt-3 rounded-md p-3">
 <h2 className='text-center text-2xl select-none ' >Your Tasks</h2>
@@ -84,13 +126,10 @@ export default function SelectMode() {
 <div className=" h-auto w-full md:w-[300px] md:m-0 m-auto mt-7 pb-4">
 
 
-
-<button className='bg-myWhite text-myBlue w-full h-[40px] text-2xl select-none'   >Collection Mode</button>
-
+<button onClick={()=>changeMode("collection")} className='bg-myWhite text-myBlue w-full h-[40px] text-2xl select-none'   >Collection Mode</button>
 
 <div className="min-h-[400px] h-auto w-full m-auto border mt-3 rounded-md p-3">
 <h2 className='text-center text-2xl select-none ' >Collections Mode</h2>
-
 
 <div className="mt-6">
 

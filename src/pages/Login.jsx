@@ -1,32 +1,33 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
-import { data, Link } from 'react-router-dom'
+import {  Link, useNavigate } from 'react-router-dom'
+import { useAppContext } from '../context/AppContex'
 
 export default function Login() {
+const {setProfile} = useAppContext();
+const navigate = useNavigate(null)
 
 
 const [isFocus,setIsFocus] = useState(false)
+
 const [showPassword ,setShowPassword] = useState(false)
 
 const [formData , setFormData]= useState({
   email : "",
   password :""
 
-})
+});
 const [ loading , setLoading] = useState(false)
-
 
 const handleInput = (e)=>{
   e.preventDefault()
   const {name  , value} = e.target; 
-  setFormData( (prev) => ( { ...prev , [name] : value}))
-  
+  setFormData( (prev) => ( { ...prev , [name] : value}))  
 }
 // console.log(formData);
 
 const handleSubmit = async (e)=>{
-
 
   e.preventDefault();
   try {
@@ -44,19 +45,18 @@ const response = await axios.post(`https://todo-server-six-ashen.vercel.app/user
 })
 const data  = await response.data;
 console.log(data.data.token);
+setProfile(data.data)
 toast.success(data.message)
-
 localStorage.setItem("token" , data?.data?.token)
+navigate("/")
 
   } catch (error) {
     console.log("Form Not Submitted ::" , error);
     if(error?.response?.data) toast.error(error?.response?.data?.message)
 
-  }finally{ setLoading(false)}
+  }finally{
+     setLoading(false)}
 }
-
-
-
 
   return (<>
 
