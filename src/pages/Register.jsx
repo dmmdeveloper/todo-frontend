@@ -6,15 +6,13 @@ import toast from 'react-hot-toast'
 export default function Register() {
 
 
-
 const [formData , setFormData] = useState({
   name :"",
   email:"",
   password:""
 })
+const [loading,setLoading] = useState(false)
 const [avatar , setAvatar] = useState(null)
-
-
 
 const handleInput = (e)=>{
 
@@ -27,6 +25,7 @@ setFormData( (prev) => ({
 // console.log(formData);
 // 
 const handleSubmit = async(e)=>{
+
   e.preventDefault()
   const formToSend = new FormData();
   formToSend.append("name", formData.name); // Use formData state for text fields
@@ -34,22 +33,26 @@ const handleSubmit = async(e)=>{
   formToSend.append("password", formData.password);
   formToSend.append("avatar", avatar); // Append the avatar file
 
-
 try {
+  setLoading(true)
 const respose  =  await axios.post(`https://todo-server-six-ashen.vercel.app/user/register` , formToSend , {
   withCredentials : true,
   headers:{
     "Content-Type":"multipart/form-data"
   }
 })
-
 const data = await respose.data;
 console.log( "Data", data);  
 toast.success(data.message)
-
 } catch (error) {
   console.log("Form Not Submitted"  , error);
-  toast.error(error.response.data.message)
+  if(error?.response?.data){
+    toast.error(error.response.data.message)
+  }
+  toast.error("Form Not Submitted .. Something went wrong")
+}
+finally{
+  setLoading(false);
 }
 }
 
@@ -140,7 +143,6 @@ reader.onload = ()=>{
         <img  className='h-[40px] w-[40px]' src={previweImage} alt="" />
         :
         <span className="ml-4 text-myHalfWhite">{fileName}</span>
-
       }
     </div>
 </div>
@@ -151,8 +153,20 @@ reader.onload = ()=>{
 
 <div className="">
 
+<button 
+  type="submit" 
+  className="h-[40px] w-full border hover:text-myHalfWhite mt-10 rounded-md text-xl hover:border-[2px] duration-100 flex items-center justify-center"
+>
 
-<button type='submit'  className='h-[40px] w-full border hover:text-myHalfWhite mt-10 rounded-md text-xl hover:border-[2px] duration-100' >Signup</button>
+  {
+    loading ?
+    <div 
+    className="h-[30px] w-[30px] border-4 border-t-transparent border-myHalfWhite rounded-full animate-spin"
+  ></div>:
+  <span className="ml-2">Signup</span>
+
+  }
+</button>
 <p className='text-end pr-2  w-full'  >
 <Link to='/login' className='text-myHalfWhite decoration-myHalfWhite hover:text-myWhite hover:underline-offset-3 hover:tracking-wide duration-150 underline'>
   login

@@ -1,11 +1,51 @@
+import axios from 'axios'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { data, Link } from 'react-router-dom'
 
 export default function Login() {
 
 
 const [isFocus,setIsFocus] = useState(false)
 const [showPassword ,setShowPassword] = useState(false)
+
+const [formData , setFormData]= useState({
+  email : "",
+  password :""
+
+})
+
+
+const handleInput = (e)=>{
+
+  e.preventDefault()
+  const {name  , value} = e.target; 
+  setFormData( (prev) => ( { ...prev , [name] : value}))
+  console.log(formData);
+  
+}
+
+const handleSubmit = async (e)=>{
+
+  e.preventDefault();
+  try {
+
+const dataSendTo = new FormData();
+dataSendTo.append("email", formData.email)
+dataSendTo.append("password" , formData.password);
+
+const response = await axios.post(`https://todo-server-six-ashen.vercel.app//user/login` , dataSendTo , {
+  withCredentials : true ,
+  headers : {
+    "Content-Type":"multipart/form-data"
+  }
+})
+const data  = await response.data;
+console.log(data);
+
+  } catch (error) {
+    console.log("Form Not Submitted ::" , error);
+  }
+}
 
 
 
@@ -14,21 +54,21 @@ const [showPassword ,setShowPassword] = useState(false)
 
 <div className="h-screen w-full bg-myBlue flex justify-center items-center">
 
-<form className="min-h-[300px] h-auto w-[270px] border border-[white] flex flex-col rounded-lg p-4">
+<form onSubmit={handleSubmit} className="min-h-[300px] h-auto w-[270px] border border-[white] flex flex-col rounded-lg p-4">
 
 {/* Inputs Div */}
 
 <div className="mt-10 flex  flex-col  gap-7">
 
 <div className="">
-<input className='w-full h-[40px] border border-t-0 border-r-0 focus:outline-none focus:border-b-2 focus:border-l-2 focus:bg-myBlue outline-none bg-myBlue p-2 placeholder:text-[#ffffffa5]' type="email" placeholder='Type email'  />
+<input onChange={handleInput} value={formData.email} required name='email' className='w-full h-[40px] border border-t-0 border-r-0 focus:outline-none focus:border-b-2 focus:border-l-2 focus:bg-myBlue outline-none bg-myBlue p-2 placeholder:text-[#ffffffa5]' type="email" placeholder='Type email'  />
 </div>
 
 
 
 <div className={`h-[40px] w-full flex items-center border border-t-0 border-r-0 ${isFocus ? "border-b-2 border-l-2":""} `}>
 
-<input  onFocus={()=>setIsFocus(true)} onBlur={()=>setIsFocus(false) } className='h-full w-[85%] outline-none p-3 bg-myBlue placeholder:text-myHalfWhite' placeholder='Password'  type={`${showPassword ?"text":"Password"}`}/>
+<input  onChange={handleInput} value={formData.password} required name='password' onFocus={()=>setIsFocus(true)} onBlur={()=>setIsFocus(false) } className='h-full w-[85%] outline-none p-3 bg-myBlue placeholder:text-myHalfWhite' placeholder='Password'  type={`${showPassword ?"text":"Password"}`}/>
 
 <div className='h-full flex items-center justify-center' >
 <button onClick={(e)=>{setShowPassword(!showPassword) ; e.preventDefault() ; }} >
@@ -54,7 +94,7 @@ const [showPassword ,setShowPassword] = useState(false)
 <div className="">
 
 
-<button  className='h-[40px] w-full border hover:text-myHalfWhite mt-10 rounded-md text-xl hover:border-[2px] duration-100' >Login</button>
+<button type='submit'  className='h-[40px] w-full border hover:text-myHalfWhite mt-10 rounded-md text-xl hover:border-[2px] duration-100' >Login</button>
 <p className='text-end pr-2  w-full'  >
 <Link to='/register' className='text-myHalfWhite decoration-myHalfWhite hover:text-myWhite hover:underline-offset-3 hover:tracking-wide duration-150 underline'>
   signup
