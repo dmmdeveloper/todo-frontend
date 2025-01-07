@@ -166,7 +166,7 @@ reader.onload = ()=>{
   {
     loading ?
     <div 
-    className="h-[25px]  md:h-[30px] w-[25px] md:w-[30px] border-2 md:border-4 border-t-transparent border-myBlue rounded-full animate-spin"
+    className="h-[25px]  md:h-[30px] w-[25px] md:w-[30px] border-2 md:border-4 border-t-transparent border-myWhite rounded-full animate-spin"
   ></div> :
   <span className="ml-2">Signup</span>
 
