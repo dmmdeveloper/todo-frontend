@@ -32,7 +32,6 @@ setProfile(data.data)
 
 }
 const changeMode =async (mode ="general")=>{
-
     try {
       setModeLoading(true)
     const response = await axios.post(`https://todo-server-six-ashen.vercel.app/user/mode`  , { mode} , {
@@ -94,7 +93,7 @@ value={{
 }}
 >
 <Routes>
-<Route path="/" element= {  !token ? (profile.mode === "collection" ?<Collection/> :<General/>): <Navigate to={"/login"} /> } /> 
+<Route path="/" element= {  token ? (profile.mode === "collection" ?<Collection/> :<General/>): <Navigate to={"/login"} /> } /> 
 <Route path="/login" element ={<Login/>} /> 
 <Route path="/register" element = {<Register/>} />
 <Route path="/select-mode" element = {<SelectMode/>} /> 
