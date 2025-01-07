@@ -19,6 +19,7 @@ const [logOutLoading , setLogOuLoading] = useState(false)
 
 const navigate = useNavigate(null)
 const fetchProfile = async ()=>{
+  
 
 try {
 const response = await axios.get(`https://todo-server-six-ashen.vercel.app/user/profile`, { withCredentials : true} )
@@ -93,7 +94,7 @@ value={{
 }}
 >
 <Routes>
-<Route path="/" element= {  token ? (profile.mode === "collection" ?<Collection/> :<General/>): <Navigate to={"/login"} /> } /> 
+<Route path="/" element= {  !token ? (profile.mode === "collection" ?<Collection/> :<General/>): <Navigate to={"/login"} /> } /> 
 <Route path="/login" element ={<Login/>} /> 
 <Route path="/register" element = {<Register/>} />
 <Route path="/select-mode" element = {<SelectMode/>} /> 

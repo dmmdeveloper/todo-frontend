@@ -6,7 +6,8 @@ export default function Nav() {
   const [showNav, setShowNav] = useState(false);
   const navRef = useRef(null);
   const btnRef = useRef(null);
-const {logOut  ,logOutLoading } = useAppContext()
+const {logOut  ,logOutLoading , profile ,changeMode } = useAppContext()
+console.log("Profile" , profile);
 
   // Function to handle the click outside logic
   const clzNavClickOutside = (event) => {
@@ -46,10 +47,11 @@ const {logOut  ,logOutLoading } = useAppContext()
 :""
 }
 
+      <nav className='h-[70px] w-full border-b-2 flex justify-between px-1 md:px-3 items-center'>
 
-      <nav className='h-[70px] w-full border-b-2 flex justify-between px-3 items-center'>
-        <h1 className='text-3xl'>
-          Dost Muhammad<span className='text-blue-900 italic'>'s</span> Todos
+        <h1 className='md:text-3xl text-2xl text-wrap'>
+
+         { profile.name ? profile.name : "Dost Muhammad"}<span className='text-blue-900 italic'>'s</span> Todos
         </h1>
 
         <button
@@ -64,22 +66,30 @@ const {logOut  ,logOutLoading } = useAppContext()
               <i className="fa-solid fa-caret-down text-myBlue"></i>
             </div>
           </div>
-          <img className="h-full w-full rounded-full" src="https://images.static-bluray.com/products/22/8967_5_front.jpg" alt="" />
+          <img className="h-full w-full rounded-full" src={ profile.avatar ?profile.avatar :  "https://images.static-bluray.com/products/22/8967_5_front.jpg"} alt="" />
         </button>
       </nav>
+
       {/* nav Items */}
       <div ref={navRef} className={`h-auto w-[150px] text-myBlue bg-white fixed top-[70px] right-1 ${showNav ? 'show_Nav' : 'clz_Nav'} p-2`}>
         <ul className='w-full items-center gap-1 flex flex-col'>
-          <Link to={"/profile"} className="text-myBlue text-center text-[20px] p-2 flex gap-3 items-center w-[100%] hover:bg-blue-200">
+          <Link to={"/profile"} className="text-myBlue text-center  text-[20px] p-2 flex gap-3 items-center w-[100%] hover:bg-blue-200">
             <i className="fa-solid fa-user text-myBlue"></i>
             Profile
           </Link>
           <Link className="text-myBlue flex gap-3 items-center text-center text-[20px] p-2 w-[100%] hover:bg-blue-200">
             <i className="fa-solid fa-clock-rotate-left text-myBlue"></i> History
           </Link>
-          <Link className="text-myBlue text-[20px] flex gap-2 items-center text-center p-2 w-[100%] hover:bg-blue-200">
-            <i className="fa-solid fa-layer-group text-myBlue"></i> Collections
-          </Link>
+          {
+            profile.mode ==="general"?
+            <Link onClick={()=>changeMode("collection")} className="text-myBlue text-[20px] flex gap-2 items-center text-center p-2 w-[100%] hover:bg-blue-200">
+            <i className="fa-solid fa-layer-group text-myBlue"></i> todos
+          </Link>:
+     <Link onClick={()=>changeMode("general")} className="text-myBlue text-[20px] flex gap-2 items-center text-center p-2 w-[100%] hover:bg-blue-200">
+     <i className="fa-solid fa-layer-group text-myBlue"></i> Collections
+   </Link>
+          }
+     
           <button  onClick={logOut} className="text-myBlue text-center flex gap-3 items-center text-[20px] p-2 w-[100%] hover:bg-blue-200">
             <i className="fa-solid fa-arrow-right-from-bracket text-myBlue"></i> Logout
           </button>
