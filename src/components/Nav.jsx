@@ -6,7 +6,7 @@ export default function Nav() {
   const [showNav, setShowNav] = useState(false);
   const navRef = useRef(null);
   const btnRef = useRef(null);
-const {logOut  ,logOutLoading , profile ,changeMode } = useAppContext()
+const {logOut  ,logOutLoading , profile ,changeMode , modeLoading } = useAppContext()
 console.log("Profile" , profile);
 
   // Function to handle the click outside logic
@@ -38,7 +38,7 @@ console.log("Profile" , profile);
     <>
 
 {
-  logOutLoading?
+  logOutLoading || modeLoading ?
 <div className="h-screen w-full backdrop-blur-sm fixed top-0 flex z-30 justify-center items-center">
 <div 
   className="h-[300px] w-[300px] border-4 border-t-transparent border-myHalfWhite rounded-full animate-spin"
@@ -51,7 +51,7 @@ console.log("Profile" , profile);
 
         <h1 className='md:text-3xl text-2xl text-wrap'>
 
-         { profile.name ? profile.name : "Dost Muhammad"}<span className='text-blue-900 italic'>'s</span> Todos
+         { profile.name ? profile.name : "...username...."}<span className='text-blue-900 italic'>'s</span> Todos
         </h1>
 
         <button
@@ -83,10 +83,11 @@ console.log("Profile" , profile);
           {
             profile.mode ==="general"?
             <Link onClick={()=>changeMode("collection")} className="text-myBlue text-[20px] flex gap-2 items-center text-center p-2 w-[100%] hover:bg-blue-200">
-            <i className="fa-solid fa-layer-group text-myBlue"></i> todos
+            <i className="fa-solid fa-layer-group text-myBlue"></i> Collections
           </Link>:
      <Link onClick={()=>changeMode("general")} className="text-myBlue text-[20px] flex gap-2 items-center text-center p-2 w-[100%] hover:bg-blue-200">
-     <i className="fa-solid fa-layer-group text-myBlue"></i> Collections
+
+<i class="fa-regular fa-square-check text-myBlue"></i>Todos
    </Link>
           }
      
