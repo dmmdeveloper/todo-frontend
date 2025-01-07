@@ -53,13 +53,14 @@ const [loading , setLoading] = useState(false)
 
 
 const handleSubmit = async( e)=>{
+
 e.preventDefault();  
 if(!text)  {
   toast.warning("Write Todo in Input")
 }
 try {
   setLoading(true)
-const response = await axios.post(` http://localhost:2000/todo/create` , { text} , { withCredentials:true ,
+const response = await axios.post(` https://todo-server-six-ashen.vercel.app/todo/create` , { text} , { withCredentials:true ,
   headers:{
     "Content-Type":"application/json"
   }
