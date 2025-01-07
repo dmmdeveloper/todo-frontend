@@ -9,6 +9,8 @@ const AppContext = createContext(
     fetchProfile : ()=>{},
     changeMode : (mode)=>{},
     modeLoading :false,
+    logOut : ()=>{},
+    logOutLoading : false
     // setModeLoading : ()=>{}
     
 });

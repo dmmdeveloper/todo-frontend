@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from "axios"
 import toast from 'react-hot-toast'
 
@@ -13,7 +13,7 @@ const [formData , setFormData] = useState({
 })
 const [loading,setLoading] = useState(false)
 const [avatar , setAvatar] = useState(null)
-
+const navigate = useNavigate(null)
 const handleInput = (e)=>{
 
 const {name, value} = e.target;
@@ -44,7 +44,15 @@ const respose  =  await axios.post(`https://todo-server-six-ashen.vercel.app/use
 const data = await respose.data;
 localStorage.setItem("token",data?.data?.token)
 console.log( "Data", data);  
-toast.success(data.message)
+if(data){
+  toast.success(data.message);
+  navigate("/select-mode")
+
+}
+
+
+
+
 } catch (error) {
   console.log("Form Not Submitted"  , error);
   if(error?.response?.data){

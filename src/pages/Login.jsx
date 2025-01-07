@@ -43,11 +43,12 @@ const response = await axios.post(`https://todo-server-six-ashen.vercel.app/user
     "Content-Type":"multipart/form-data"
   }
 })
+
 const data  = await response.data;
 console.log(data.data.token);
 setProfile(data.data)
 toast.success(data.message)
-localStorage.setItem("token" , data?.data?.token)
+localStorage.setItem("token", data?.data?.token)
 navigate("/")
 
   } catch (error) {

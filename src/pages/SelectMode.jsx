@@ -39,7 +39,7 @@ const { changeMode , modeLoading } = useAppContext()
 
 {
   modeLoading?
-<div className="h-screen w-full backdrop-blur-sm fixed top-0 flex justify-center items-center">
+<div className="h-screen w-full backdrop-blur-sm fixed top-0 flex z-30 justify-center items-center">
 <div 
   className="h-[300px] w-[300px] border-4 border-t-transparent border-myHalfWhite rounded-full animate-spin"
 ></div> 

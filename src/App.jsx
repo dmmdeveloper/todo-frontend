@@ -10,13 +10,12 @@ import { useEffect, useState } from "react"
 import Collection from "./pages/Collection"
 import General from "./pages/General"
 import axios from "axios"
-
+import Profile from "./pages/Profile"
 
 function App() {
-    
 const [profile , setProfile] = useState([]);
-const [modeLoading , setModeLoading] = useState(false)
-
+const [modeLoading , setModeLoading] = useState(false);
+const [logOutLoading , setLogOuLoading] = useState(false) 
 
 const navigate = useNavigate(null)
 const fetchProfile = async ()=>{
@@ -31,7 +30,6 @@ setProfile(data.data)
 }
 
 }
-
 const changeMode =async (mode ="general")=>{
 
     try {
@@ -45,9 +43,8 @@ const changeMode =async (mode ="general")=>{
     const data = await response.data;
     console.log(data);
     navigate("/")
-    
-    if( data ){
-      localStorage.setItem("mode" , mode)
+    if( data){
+      localStorage.setItem("mode",mode)
     }
     } catch (error) {
       console.log("Mode not Changed"  , error);
@@ -55,6 +52,25 @@ const changeMode =async (mode ="general")=>{
         setModeLoading(false);
     }
       }
+const logOut = async ()=>{
+
+try {
+  setLogOuLoading(true)
+const response = await axios.get(`https://todo-server-six-ashen.vercel.app/user/logout` , { withCredentials : true} )
+const data = await response.data
+console.log(data);
+
+if(data){
+  localStorage.removeItem("token");
+  // window.location.reload()
+  navigate("/login");
+}
+} catch (error) {
+  console.log("User Not Logout ::" , error);
+}finally { 
+  setLogOuLoading(false)
+}
+}
 
 useEffect(()=>{
     fetchProfile()
@@ -64,28 +80,24 @@ useEffect(() =>{
 fetchProfile()
 } , [modeLoading]);
 
-console.log(profile.mode);
-
     const token = localStorage.getItem("token");
-    const mode = "c"
 
 return (<>
 
 <AppContextProvider
 value={{
     profile ,setProfile , fetchProfile,
-    changeMode ,modeLoading  ,
+    changeMode ,modeLoading  , logOut  , 
+    logOutLoading
     // /setModeLoading
 }}
 >
-
-
 <Routes>
-
-<Route path="/" element= {  token ? (profile.mode ==="collection" ?<Collection/> :<General/>): <Navigate to={"/login"} /> } /> 
+<Route path="/" element= {  token ? (profile.mode === "collection" ?<Collection/> :<General/>): <Navigate to={"/login"} /> } /> 
 <Route path="/login" element ={<Login/>} /> 
 <Route path="/register" element = {<Register/>} />
 <Route path="/select-mode" element = {<SelectMode/>} /> 
+<Route path="/profile" element={<Profile/> } />
 <Route path="*" element={<NotFound/>} />
 </Routes>
 </AppContextProvider>
