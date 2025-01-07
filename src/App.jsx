@@ -16,6 +16,7 @@ function App() {
 const [profile , setProfile] = useState([]);
 const [modeLoading , setModeLoading] = useState(false);
 const [logOutLoading , setLogOuLoading] = useState(false) 
+const [todos,setTodos]  =useState([])
 
 const navigate = useNavigate(null)
 const fetchProfile = async ()=>{
@@ -54,6 +55,7 @@ const changeMode =async (mode ="general")=>{
       }
 const logOut = async ()=>{
 
+
 try {
   setLogOuLoading(true)
 const response = await axios.get(`https://todo-server-six-ashen.vercel.app/user/logout` , { withCredentials : true} )
@@ -72,14 +74,33 @@ if(data){
 }
 }
 
+const fetchTodos = async ()=>{
+try {
+  const response  = await axios.get(`https://todo-server-six-ashen.vercel.app/todo/todos` , { withCredentials:true})
+  const data = await response.data;
+  setTodos(data.data)
+} catch (error) {
+  console.log("todo Not Fetched :))" , error); 
+}
+} 
+
+
+
+
+
 useEffect(()=>{
     fetchProfile()
+    fetchTodos()
 } , []);
 
 useEffect(() =>{
 fetchProfile()
 } , [modeLoading]);
 
+
+useEffect(()=>{
+  fetchTodos()
+} , [todos] )
     const token = localStorage.getItem("token");
 
 return (<>
@@ -88,7 +109,7 @@ return (<>
 value={{
     profile ,setProfile , fetchProfile,
     changeMode ,modeLoading  , logOut  , 
-    logOutLoading
+    logOutLoading , todos ,setTodos 
     // /setModeLoading
 }}
 >

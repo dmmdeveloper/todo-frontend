@@ -130,7 +130,6 @@ reader.onload = ()=>{
 <div className="flex items-center justify-between ">
       {/* Label triggers the file input */}
       <div>
-
       <label
         htmlFor="file-input"
         className="bg-[#4c99f2] flex-1 text-white px-4 py-2 rounded cursor-pointer hover:bg-[#589ce9]"
@@ -156,8 +155,6 @@ reader.onload = ()=>{
     </div>
 </div>
 
-
-
 {/* log in */}
 
 <div className="">
@@ -166,11 +163,10 @@ reader.onload = ()=>{
   type="submit" 
   className="h-[40px] w-full border hover:text-myHalfWhite mt-10 rounded-md text-xl hover:border-[2px] duration-100 flex items-center justify-center"
 >
-
   {
     loading ?
     <div 
-    className="h-[30px] w-[30px] border-4 border-t-transparent border-myHalfWhite rounded-full animate-spin"
+    className="h-[25px]  md:h-[30px] w-[25px] md:w-[30px] border-2 md:border-4 border-t-transparent border-myBlue rounded-full animate-spin"
   ></div> :
   <span className="ml-2">Signup</span>
 

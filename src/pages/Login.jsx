@@ -32,7 +32,6 @@ const handleSubmit = async (e)=>{
   e.preventDefault();
   try {
     setLoading(true)
-
 const dataSendTo = new FormData();
 dataSendTo.append("email", formData.email)
 dataSendTo.append("password" , formData.password);
@@ -59,7 +58,6 @@ navigate("/")
 }
 
   return (<>
-
 <div className="h-screen w-full bg-myBlue flex justify-center items-center">
 
 <form onSubmit={handleSubmit} className="min-h-[300px] h-auto w-[270px] border border-[white] flex flex-col rounded-lg p-4">
@@ -106,8 +104,8 @@ navigate("/")
 {
   loading?
   <div 
-  className="h-[30px] w-[30px] border-4 border-t-transparent border-myHalfWhite rounded-full animate-spin"
-></div> 
+  className="h-[25px]  md:h-[30px] w-[25px] md:w-[30px] border-2 md:border-4 border-t-transparent border-myBlue rounded-full animate-spin"
+></div>
 :<span>Login</span>
 }  
   </button>

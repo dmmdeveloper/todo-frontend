@@ -10,7 +10,9 @@ const AppContext = createContext(
     changeMode : (mode)=>{},
     modeLoading :false,
     logOut : ()=>{},
-    logOutLoading : false
+    logOutLoading : false,
+    todos: [],
+    setTodos : ()=>{}
     // setModeLoading : ()=>{}
     
 });

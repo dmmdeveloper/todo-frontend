@@ -7,7 +7,7 @@ export default function Nav() {
   const navRef = useRef(null);
   const btnRef = useRef(null);
 const {logOut  ,logOutLoading , profile ,changeMode , modeLoading } = useAppContext()
-console.log("Profile" , profile);
+// console.log("Profile" , profile);
 
   // Function to handle the click outside logic
   const clzNavClickOutside = (event) => {
@@ -36,7 +36,6 @@ console.log("Profile" , profile);
 
   return (
     <>
-
 {
   logOutLoading || modeLoading ?
 <div className="h-screen w-full backdrop-blur-sm fixed top-0 flex z-30 justify-center items-center">
@@ -46,18 +45,16 @@ console.log("Profile" , profile);
 </div>
 :""
 }
-
-      <nav className='h-[70px] w-full border-b-2 flex justify-between px-1 md:px-3 items-center'>
+      <nav className=' h-[55px] md:h-[70px] w-full border-b-2 flex justify-between px-1 md:px-3 items-center'>
 
         <h1 className='md:text-3xl text-2xl text-wrap'>
 
          { profile.name ? profile.name : "...username...."}<span className='text-blue-900 italic'>'s</span> Todos
         </h1>
-
         <button
           ref={btnRef}
           onClick={toggleNav}
-          className="h-[50px] active:scale-95 w-[50px] cursor-pointer bg-blue-400 border rounded-full relative"
+          className=" h-[45px] md:h-[50px] active:scale-95 w-[45px] md:w-[50px] cursor-pointer bg-blue-400 border rounded-full relative"
         >
           <div className="h-full w-full absolute top-0 rounded-full flex items-end justify-end">
             <div
@@ -69,9 +66,8 @@ console.log("Profile" , profile);
           <img className="h-full w-full rounded-full" src={ profile.avatar ?profile.avatar :  "https://images.static-bluray.com/products/22/8967_5_front.jpg"} alt="" />
         </button>
       </nav>
-
       {/* nav Items */}
-      <div ref={navRef} className={`h-auto w-[150px] text-myBlue bg-white fixed top-[70px] right-1 ${showNav ? 'show_Nav' : 'clz_Nav'} p-2`}>
+      <div ref={navRef} className={`h-auto w-[150px] text-myBlue bg-white fixed top-50px md:top-[70px] right-1 ${showNav ? 'show_Nav' : 'clz_Nav'} p-2`}>
         <ul className='w-full items-center gap-1 flex flex-col'>
           <Link to={"/profile"} className="text-myBlue text-center  text-[20px] p-2 flex gap-3 items-center w-[100%] hover:bg-blue-200">
             <i className="fa-solid fa-user text-myBlue"></i>
