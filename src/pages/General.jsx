@@ -102,8 +102,6 @@ function TodoItem({todo}) {
 const [loading , setLoading]  = useState(false)
 
   const deleteTodo = async (id)=>{
-
-
     // https://todo-server-six-ashen.vercel.app
     try {
       setLoading(true)
@@ -112,6 +110,7 @@ const [loading , setLoading]  = useState(false)
       console.log(data);
     } catch (error) {
       console.log("Todo not Deleted :)" , error);
+      toast.error("OOPS Todo Not Deleted ! \n Some Thing Went Wrong",)
     }finally {  setLoading(false)}
   } 
 
@@ -146,15 +145,14 @@ const [loading , setLoading]  = useState(false)
 <input
   type="text"
   value={todo.text}
-  className="text-myWhite w-[90%] select-none focus:outline-none bg-myBlue overflow-x-auto cursor-text"
+  className="text-myWhite w-[90%] select-none focus:outline-none focus:border-r-2 bg-myBlue overflow-x-auto cursor-text"
   readOnly
   name=""
   id=""
 />
 
-
       </div>
-      <div className=" flex items-center gap-2 md:gap-5 ">
+      <div className=" flex items-center gap-2 md:gap-5">
 
 <button className='text-[18px] md:text-[25px] cursor-pointer h-[30px] md:h-[40px] w-[30px] md:w-[40px] hover:bg-blue-400  duration-150 rounded-md' >
 <i class="fa-solid fa-pencil"></i>

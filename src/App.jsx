@@ -4,7 +4,7 @@ import Login from "./pages/Login"
 import NotFound from "./pages/NotFound"
 import Register from "./pages/Register"
 import SelectMode from "./pages/SelectMode"
-import {Toaster} from "react-hot-toast"
+import toast, {Toaster} from "react-hot-toast"
 import { AppContextProvider } from "./context/AppContex"
 import { useEffect, useState } from "react"
 import Collection from "./pages/Collection"
@@ -20,6 +20,7 @@ const [todos,setTodos]  =useState([])
 
 const navigate = useNavigate(null)
 const fetchProfile = async ()=>{
+
   
 
 try {
@@ -29,6 +30,7 @@ console.log(data);
 setProfile(data.data)
 } catch (error) {
     console.log("User NotFetched :))" , error);
+
 }
 
 }
@@ -75,6 +77,7 @@ if(data){
 }
 // https://todo-server-six-ashen.vercel.app
 const fetchTodos = async ()=>{
+
 try {
   const response  = await axios.get(`https://todo-server-six-ashen.vercel.app
 /todo/todos` , { withCredentials:true})
@@ -82,6 +85,7 @@ try {
   setTodos(data.data)
 } catch (error) {
   console.log("todo Not Fetched :))" , error); 
+  toast.error("OOPS Todos Not Fetched !! \n Somthing Went Wrong")
 }
 } 
 
