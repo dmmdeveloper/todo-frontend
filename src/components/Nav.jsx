@@ -67,7 +67,7 @@ const {logOut  ,logOutLoading , profile ,changeMode , modeLoading } = useAppCont
         </button>
       </nav>
       {/* nav Items */}
-      <div ref={navRef} className={`h-auto w-[150px] text-myBlue bg-white fixed top-50px md:top-[70px] right-1 ${showNav ? 'show_Nav' : 'clz_Nav'} p-2`}>
+      <div ref={navRef} className={`h-auto w-[150px] text-myBlue bg-white z-50 fixed top-50px md:top-[70px] right-1 ${showNav ? 'show_Nav' : 'clz_Nav'} p-2`}>
         <ul className='w-full items-center gap-1 flex flex-col'>
           <Link to={"/profile"} className="text-myBlue text-center  text-[20px] p-2 flex gap-3 items-center w-[100%] hover:bg-blue-200">
             <i className="fa-solid fa-user text-myBlue"></i>

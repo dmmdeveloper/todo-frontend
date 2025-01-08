@@ -130,11 +130,14 @@ const [loading , setLoading]  = useState(false)
   <ul className='mt-5' >
     <li className=' px-3' >
 <div className='flex justify-between items-center' >
-<div  className=" flex justify-center items-center gap-2 cursor-pointer ">
+<div  className=" flex  w-[70%] items-center gap-2 cursor-pointer ">
 {/* .cutom Input Radio */}
 <div className="  h-[25px] md:h-[30px] w-[25px] md:w-[30px] border md:border-[2px] rounded-full flex justify-center items-center"> <div className="h-[20px] md:h-[22px] md:w-[22px]  w-[20px] bg-myWhite rounded-full"></div> </div>
 {/* .cutom Input Radio END */}
-<label className=' text-[22px] md:text-[25px]  cursor-pointer' htmlFor="">{todo.text}</label>
+
+{/* <label className=' text-[22px] md:text-[25px]  cursor-pointer' htmlFor="">{todo.text}</label> */}
+<input type="text" value={todo.text} className='text-myWhite w-[90%] focus:outline-none bg-myBlue '  readOnly name="" id="" />
+
       </div>
       <div className=" flex items-center gap-2 md:gap-5 ">
 <button className='text-[22px] md:text-[25px] cursor-pointer h-[40px] w-[40px] hover:bg-blue-400  duration-150 rounded-md' >
@@ -152,7 +155,6 @@ const [loading , setLoading]  = useState(false)
 }
 
 <i class="fa-solid fa-trash"></i>
-
 
 </button>
       </div>
