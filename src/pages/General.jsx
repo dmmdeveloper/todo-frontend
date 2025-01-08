@@ -48,9 +48,9 @@ export default function General() {
 
 //  /create 
 function TodoForm() {
+
 const [text , setText] = useState("");
 const [loading , setLoading] = useState(false)
-
 
 const handleSubmit = async( e)=>{
 
@@ -60,7 +60,7 @@ if(!text)  {
 }
 try {
   setLoading(true)
-const response = await axios.post(` https://todo-server-six-ashen.vercel.app/todo/create` , { text} , { withCredentials:true ,
+const response = await axios.post(`https://todo-server-six-ashen.vercel.app/todo/create` , { text} , { withCredentials:true ,
   headers:{
     "Content-Type":"application/json"
   }
@@ -70,6 +70,7 @@ console.log(data);
 if( data) setText("")
 } catch (error) {
   console.log("Todo Not Created :))"  , error);
+  toast.error("OOPS Some Thing ent Wrong ❗❗ ")
 } finally{ setLoading(false)}
 }
 
@@ -97,23 +98,28 @@ if( data) setText("")
 // fetch
 function TodoItem({todo}) {
 
+const [loading , setLoading]  = useState(false)
+
   const deleteTodo = async (id)=>{
+
+
+    // https://todo-server-six-ashen.vercel.app
     try {
+      setLoading(true)
       const response  =await axios.delete(`https://todo-server-six-ashen.vercel.app/todo/delete/${id}` , { withCredentials:true} )
       const data = await response.data;
       console.log(data);
     } catch (error) {
       console.log("Todo not Deleted :)" , error);
-    }
-
+    }finally {  setLoading(false)}
   } 
 
-
   const formatDate = (timestamp) => {
+
     const date = new Date(timestamp);
     const hours = date.getHours();
     const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const ampm = hours >=12 ? 'PM' : 'AM';
     const formattedHours = hours % 12 || 12; // Convert 24-hour to 12-hour format
     const formattedMinutes = minutes.toString().padStart(2, '0'); // Ensure 2 digits for minutes
     const formattedDate = date.toLocaleDateString(); // Format as MM/DD/YYYY
@@ -124,7 +130,7 @@ function TodoItem({todo}) {
   <ul className='mt-5' >
     <li className=' px-3' >
 <div className='flex justify-between items-center' >
-      <div  className=" flex justify-center items-center gap-2 cursor-pointer ">
+<div  className=" flex justify-center items-center gap-2 cursor-pointer ">
 {/* .cutom Input Radio */}
 <div className="  h-[25px] md:h-[30px] w-[25px] md:w-[30px] border md:border-[2px] rounded-full flex justify-center items-center"> <div className="h-[20px] md:h-[22px] md:w-[22px]  w-[20px] bg-myWhite rounded-full"></div> </div>
 {/* .cutom Input Radio END */}
@@ -134,8 +140,20 @@ function TodoItem({todo}) {
 <button className='text-[22px] md:text-[25px] cursor-pointer h-[40px] w-[40px] hover:bg-blue-400  duration-150 rounded-md' >
 <i class="fa-solid fa-pencil"></i>
 </button >
-<button onClick={()=>deleteTodo(todo._id)} className=' text-[22px] md:text-[25px] cursor-pointer h-[40px] w-[40px] hover:bg-blue-400  duration-150 rounded-md' >
+<button onClick={()=>deleteTodo(todo._id)} className={` relative text-[22px] md:text-[25px] cursor-pointer h-[40px] w-[40px] ${loading?"bg-blue-400":""} hover:bg-blue-400  duration-150 rounded-md`} >
+
+{
+  loading ?
+<div className="absolute h-full w-full  top-0 rounded-md flex justify-center items-center ">
+<div 
+    className="h-[25px]  md:h-[30px] w-[25px] md:w-[30px] border-2 md:border-4 border-t-transparent border-blue-900 rounded-full animate-spin"
+  ></div> 
+</div>:""
+}
+
 <i class="fa-solid fa-trash"></i>
+
+
 </button>
       </div>
 
