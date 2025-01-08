@@ -79,7 +79,8 @@ if(data){
 const fetchTodos = async ()=>{
 
 try {
-  const response  = await axios.get(`http://localhost:2000
+  const response  = await axios.get(`https://todo-server-six-ashen.vercel.app
+
 /todo/todos` , { withCredentials:true})
   const data = await response.data;
   setTodos(data.data)
