@@ -47,9 +47,11 @@ const {logOut  ,logOutLoading , profile ,changeMode , modeLoading } = useAppCont
 }
       <nav className=' h-[55px] md:h-[70px] w-full border-b-2 flex justify-between px-1 md:px-3 items-center'>
 
-        <h1 className='md:text-3xl text-2xl text-wrap'>
+        <h1 className='md:text-3xl text-2xl text-wrap flex justify-center items-center '>
 
-         { profile.name ? profile.name : "...username...."}<span className='text-blue-900 italic'>'s</span> Todos
+         { profile.name ? profile.name :(<>
+          <div class="lds-facebook"><div></div><div></div><div></div></div>
+         </>)}<span className='text-blue-900 italic'>'s</span> Todos
         </h1>
         <button
           ref={btnRef}
@@ -58,12 +60,17 @@ const {logOut  ,logOutLoading , profile ,changeMode , modeLoading } = useAppCont
         >
           <div className="h-full w-full absolute top-0 rounded-full flex items-end justify-end">
             <div
-              className={`h-[15px] w-[15px] bg-myWhite flex justify-center items-center rounded-full text-[13px] ${showNav ? 'rotate-180 duration-200 transition-all' : 'rotate-0 duration-200 transition-all'}`}
+              className={`h-[15px] z-20 w-[15px] bg-myWhite flex justify-center items-center rounded-full text-[13px] ${showNav ? 'rotate-180 duration-200 transition-all' : 'rotate-0 duration-200 transition-all'}`}
             >
               <i className="fa-solid fa-caret-down text-myBlue"></i>
             </div>
           </div>
-          <img className="h-full w-full rounded-full" src={ profile.avatar ?profile.avatar :  "https://images.static-bluray.com/products/22/8967_5_front.jpg"} alt="" />
+
+          {
+            profile.avatar ?
+            <img className="h-full w-full rounded-full" src={ profile.avatar}alt="" />:
+          <img className="h-full w-full rounded-full default-image-nav" src="https://static-00.iconduck.com/assets.00/task-complete-icon-1024x1024-eg3p1g4a.png" alt="" />
+          }
         </button>
       </nav>
       {/* nav Items */}
