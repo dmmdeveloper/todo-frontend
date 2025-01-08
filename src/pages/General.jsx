@@ -133,11 +133,11 @@ const [loading , setLoading]  = useState(false)
 <div className='flex justify-between items-center' >
 <div  className=" flex  w-[70%] items-center gap-2 cursor-pointer ">
 {/* .cutom Input Radio */}
-<div className="  h-[20px] md:h-[30px] w-[20px] md:w-[30px] border md:border-[2px] rounded-full flex justify-center items-center"> <div className="h-[17px] md:h-[22px] md:w-[22px]  w-[17px] bg-myWhite rounded-full"></div> </div>
+<div className="  h-[20px] md:h-[30px] w-[20px] md:w-[30px] border md:border-[2px] rounded-full flex justify-center items-center"> <div className="h-[15px] md:h-[22px] md:w-[22px]  w-[15px] bg-myWhite rounded-full"></div> </div>
 {/* .cutom Input Radio END */}
 
 {/* <label className=' text-[22px] md:text-[25px]  cursor-pointer' htmlFor="">{todo.text}</label> */}
-<input type="text" value={todo.text} className='text-myWhite w-[80%] md:w-[90%] focus:outline-none bg-myBlue '  readOnly name="" id="" />
+<input type="text" value={todo.text} className='text-myWhite w-[90%] focus:outline-none bg-myBlue '  readOnly name="" id="" />
 
       </div>
       <div className=" flex items-center gap-2 md:gap-5 ">
