@@ -35,7 +35,7 @@ const handleSubmit = async(e)=>{
 
 try {
   setLoading(true)
-const respose  =  await axios.post(`https://todo-server-six-ashen.vercel.app/user/register` , formToSend , {
+const respose  =  await axios.post(`/user/register` , formToSend , {
   withCredentials : true,
   headers:{
     "Content-Type":"multipart/form-data"
@@ -47,11 +47,7 @@ console.log( "Data", data);
 if(data){
   toast.success(data.message);
   navigate("/select-mode")
-
 }
-
-
-
 
 } catch (error) {
   console.log("Form Not Submitted"  , error);

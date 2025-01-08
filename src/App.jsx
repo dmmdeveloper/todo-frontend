@@ -24,7 +24,7 @@ const fetchProfile = async ()=>{
   
 
 try {
-const response = await axios.get(`https://todo-server-six-ashen.vercel.app/user/profile`, { withCredentials : true} )
+const response = await axios.get(`/user/profile`, { withCredentials : true} )
 const data = await response.data;
 console.log(data);
 setProfile(data.data)
@@ -37,7 +37,7 @@ setProfile(data.data)
 const changeMode =async (mode ="general")=>{
     try {
       setModeLoading(true)
-    const response = await axios.post(`https://todo-server-six-ashen.vercel.app/user/mode`  , { mode} , {
+    const response = await axios.post(`/user/mode`  , { mode} , {
       withCredentials :true ,
       headers :{
         "Content-Type" :"application/json"
@@ -60,7 +60,7 @@ const logOut = async ()=>{
 
 try {
   setLogOuLoading(true)
-const response = await axios.get(`https://todo-server-six-ashen.vercel.app/user/logout` , { withCredentials : true} )
+const response = await axios.get(`/user/logout` , { withCredentials : true} )
 const data = await response.data
 console.log(data);
 
