@@ -54,10 +54,11 @@ const [text , setText] = useState("");
 const [loading , setLoading] = useState(false)
 
 const handleSubmit = async( e)=>{
+
 e.preventDefault();  
 try {
   setLoading(true)
-const response = await axios.post(`https://todo-server-six-ashen.vercel.app/todo/create` , { text} , { withCredentials:true ,
+const response = await axios.post(`/todo/create` , { text} , { withCredentials:true ,
   headers:{
     "Content-Type":"application/json"
   }
@@ -95,10 +96,11 @@ const [showEdit  , setShowEdit] = useState(false);
 const [text,setText] = useState(todo.text)
 
   const deleteTodo = async (id)=>{
+
     // https://todo-server-six-ashen.vercel.app
     try {
       setLoading(true)
-      const response  =await axios.delete(`https://todo-server-six-ashen.vercel.app/todo/delete/${id}` , { withCredentials:true} )
+      const response  =await axios.delete(`/todo/delete/${id}` , { withCredentials:true} )
       const data = await response.data;
       console.log(data);
     } catch (error) {
@@ -108,12 +110,10 @@ const [text,setText] = useState(todo.text)
   } 
 
 const updateText = async(e)=>{
-
-
   e.preventDefault()
   try {
     setUpdateLoading(true)
-    const response = await axios.post(`https://todo-server-six-ashen.vercel.app/todo/update/${todo._id}` ,{ text}  , {
+    const response = await axios.post(`/todo/update/${todo._id}` ,{ text}  , {
 
       withCredentials : true,
       headers:{
