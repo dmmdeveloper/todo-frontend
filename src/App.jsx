@@ -79,8 +79,7 @@ if(data){
 const fetchTodos = async ()=>{
 
 try {
-  const response  = await axios.get(`https://todo-server-six-ashen.vercel.app
-/todo/todos` , { withCredentials:true})
+  const response  = await axios.get(`/todo/todos` , { withCredentials:true})
   const data = await response.data;
   setTodos(data.data)
 } catch (error) {
