@@ -94,9 +94,10 @@ if( data) setText("")
   
 }
 
-
 // fetch
+
 function TodoItem({todo}) {
+
 
 const [loading , setLoading]  = useState(false)
 
@@ -128,28 +129,29 @@ const [loading , setLoading]  = useState(false)
 
   return(<>
   <ul className='mt-5' >
-    <li className=' px-3' >
+    <li className=' px:1 md:px-3' >
 <div className='flex justify-between items-center' >
 <div  className=" flex  w-[70%] items-center gap-2 cursor-pointer ">
 {/* .cutom Input Radio */}
-<div className="  h-[25px] md:h-[30px] w-[25px] md:w-[30px] border md:border-[2px] rounded-full flex justify-center items-center"> <div className="h-[20px] md:h-[22px] md:w-[22px]  w-[20px] bg-myWhite rounded-full"></div> </div>
+<div className="  h-[20px] md:h-[30px] w-[20px] md:w-[30px] border md:border-[2px] rounded-full flex justify-center items-center"> <div className="h-[17px] md:h-[22px] md:w-[22px]  w-[17px] bg-myWhite rounded-full"></div> </div>
 {/* .cutom Input Radio END */}
 
 {/* <label className=' text-[22px] md:text-[25px]  cursor-pointer' htmlFor="">{todo.text}</label> */}
-<input type="text" value={todo.text} className='text-myWhite w-[90%] focus:outline-none bg-myBlue '  readOnly name="" id="" />
+<input type="text" value={todo.text} className='text-myWhite w-[80%] md:w-[90%] focus:outline-none bg-myBlue '  readOnly name="" id="" />
 
       </div>
       <div className=" flex items-center gap-2 md:gap-5 ">
-<button className='text-[22px] md:text-[25px] cursor-pointer h-[40px] w-[40px] hover:bg-blue-400  duration-150 rounded-md' >
+
+<button className='text-[18px] md:text-[25px] cursor-pointer h-[30px] md:h-[40px] w-[30px] md:w-[40px] hover:bg-blue-400  duration-150 rounded-md' >
 <i class="fa-solid fa-pencil"></i>
 </button >
-<button onClick={()=>deleteTodo(todo._id)} className={` relative text-[22px] md:text-[25px] cursor-pointer h-[40px] w-[40px] ${loading?"bg-blue-400":""} hover:bg-blue-400  duration-150 rounded-md`} >
+<button onClick={()=>deleteTodo(todo._id)} className={`relative text-[18px] md:text-[25px] cursor-pointer h-[30px] w-[30px] md:h-[40px] md:w-[40px] ${loading?"bg-blue-400":""} hover:bg-blue-400  duration-150 rounded-sm`} >
 
 {
   loading ?
 <div className="absolute h-full w-full  top-0 rounded-md flex justify-center items-center ">
 <div 
-    className="h-[25px]  md:h-[30px] w-[25px] md:w-[30px] border-2 md:border-4 border-t-transparent border-blue-900 rounded-full animate-spin"
+    className="  h-[22px]  md:h-[30px] w-[22px] md:w-[30px] border-2 md:border-4 border-t-transparent border-blue-900 rounded-full animate-spin"
   ></div> 
 </div>:""
 }
@@ -160,7 +162,7 @@ const [loading , setLoading]  = useState(false)
       </div>
 
       </div>
-      <p className= ' text-[9px] md:text-[11px]  text-myHalfWhite]' >{ formatDate( todo.createdAt)}</p>
+      <p className= 'text-[9px] md:text-[11px]  text-myHalfWhite]' >{ formatDate( todo.createdAt)}</p>
     </li>
   </ul>
   </>)
