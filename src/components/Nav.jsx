@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContex';
+import todoLogo from "../../public/todo-logo.png"
 
 export default function Nav() {
   const [showNav, setShowNav] = useState(false);
@@ -69,7 +70,7 @@ const {logOut  ,logOutLoading , profile ,changeMode , modeLoading } = useAppCont
           {
             profile.avatar ?
             <img className="h-full w-full rounded-full" src={ profile.avatar}alt="" />:
-          <img className="h-full w-full rounded-full default-image-nav" src="https://static-00.iconduck.com/assets.00/task-complete-icon-1024x1024-eg3p1g4a.png" alt="" />
+          <img className="h-full w-full rounded-full default-image-nav" src={todoLogo} alt="" />
           }
         </button>
       </nav>
