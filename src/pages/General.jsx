@@ -90,8 +90,10 @@ if( data) setText("")
 // fetch
 function TodoItem({todo}) {
 const [loading , setLoading]  = useState(false)
+const [updateLoadin , setUpdateLoading] = useState(false)
 const [showEdit  , setShowEdit] = useState(false);
 const [text,setText] = useState(todo.text)
+
   const deleteTodo = async (id)=>{
     // https://todo-server-six-ashen.vercel.app
     try {
@@ -104,10 +106,12 @@ const [text,setText] = useState(todo.text)
       toast.error("OOPS Todo Not Deleted ! \n Some Thing Went Wrong",)
     }finally {  setLoading(false)}
   } 
+
 const updateText = async(e)=>{
+
   e.preventDefault()
   try {
-    const response=await axios.post(`https://todo-server-six-ashen.vercel.app/todo/update/todo/update/${todo._id}` ,{ text}  , {
+    const response = await axios.post(`https://todo-server-six-ashen.vercel.app/todo/update/${todo._id}` ,{ text}  , {
       withCredentials : true,
       headers:{
         "Content-Type":"application/json"
@@ -123,6 +127,7 @@ const updateText = async(e)=>{
   }
 } 
   const formatDate = (timestamp) => {
+
 
     const date = new Date(timestamp);
     const hours = date.getHours();
@@ -145,14 +150,14 @@ const updateText = async(e)=>{
 
 <button type='submit' className='h-full bg-myWhite hover:opacity-90 text-myBlue w-[50px] md:w-[50px] text-[20px] flex justify-center items-center' >
 
-  {/* {
-    loading?
+  {
+    updateLoadin?
     <div 
-    className="h-[25px]  md:h-[30px] w-[25px] md:w-[30px] border-2 md:border-4 border-t-transparent border-myBlue rounded-full animate-spin"
+    className="md:h-[25px]  md:w-[25px] h-[18px] w-[18px]  border-2 border-t-transparent border-myBlue rounded-full animate-spin"
   ></div> 
-    :"Add"
-  } */}
-  Save
+    : <span className='text-myBlue text-[15px]' >Add</span>
+  }
+  {/* Save */}
   </button>
   </form>
   :
