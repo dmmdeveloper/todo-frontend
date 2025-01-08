@@ -109,9 +109,12 @@ const [text,setText] = useState(todo.text)
 
 const updateText = async(e)=>{
 
+
   e.preventDefault()
   try {
+    setUpdateLoading(true)
     const response = await axios.post(`https://todo-server-six-ashen.vercel.app/todo/update/${todo._id}` ,{ text}  , {
+
       withCredentials : true,
       headers:{
         "Content-Type":"application/json"
@@ -124,7 +127,7 @@ const updateText = async(e)=>{
   } catch (error) {
     console.log("Text no Updated ::" , error);
     toast.error("Text Not Updated :)")    
-  }
+  } finally{ setUpdateLoading(false)}
 } 
   const formatDate = (timestamp) => {
 
