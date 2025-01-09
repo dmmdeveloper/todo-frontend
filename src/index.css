@@ -186,3 +186,18 @@
             animation-timing-function: ease-out;
   }
 }
+
+
+.completed-circle{
+  background:var(--white);
+  animation: completed 2s linear;
+}
+
+@keyframes completed{
+  0%{
+    transform: scale(0);
+  }
+  100%{
+    transform: scale(1);
+  }
+}

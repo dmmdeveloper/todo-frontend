@@ -89,8 +89,10 @@ if( data) setText("")
 }
 // fetch
 function TodoItem({todo}) {
+
+
 const [loading , setLoading]  = useState(false)
-const [updateLoadin , setUpdateLoading] = useState(false)
+const [updateLoadin , setUpdateLoading] = useState(false);
 const [showEdit  , setShowEdit] = useState(false);
 const [text,setText] = useState(todo.text)
 
@@ -108,6 +110,7 @@ const [text,setText] = useState(todo.text)
   } 
 
 const updateText = async(e)=>{
+
 
 
   e.preventDefault()
@@ -128,10 +131,24 @@ const updateText = async(e)=>{
     console.log("Text no Updated ::" , error);
     toast.error("Text Not Updated :)")    
   } finally{ setUpdateLoading(false)}
-} 
+}
+const toggleCompleted = async ( id, value)=>{
+
+
+  try {
+    const response = await axios.post(`https://todo-server-six-ashen.vercel.app/todo/update/${id}` ,{  completed : !value} , {
+      withCredentials : true,
+      headers:{
+        "Content-Type":"application/json"
+      }
+    } )   
+    const data = await response.data; 
+  } catch (error) {
+    console.log("Todo Not Complted :)", error);
+
+  }
+}
   const formatDate = (timestamp) => {
-
-
     const date = new Date(timestamp);
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -142,13 +159,13 @@ const updateText = async(e)=>{
     return `${formattedHours}:${formattedMinutes} ${ampm} | ${formattedDate}`;
   };
 
+
   return(<>
   <ul className='mt-5' >
-
 {
   showEdit?
-
   <form onSubmit={updateText}  className='flex justify-between items-center border border-[#08085b] h-[30px] md:h-[40px] p-1' action="">
+
   <input onChange={ (e)=>setText(e.target.value)} value={text} className='h-full w-[90%] p-2 bg-myBlue outline-none placeholder:text-myHalfWhite text-[17px]' type="text" placeholder="Edit Todo"/>
 
 <button type='submit' className='h-full bg-myWhite hover:opacity-90 text-myBlue w-[50px] md:w-[50px] text-[20px] flex justify-center items-center' >
@@ -164,33 +181,20 @@ const updateText = async(e)=>{
   </button>
   </form>
   :
-
-
     <li className=' px:1 md:px-3' >
-
 <div className='flex justify-between items-center' >
-<div  className=" flex  w-[70%] items-center gap-2 cursor-pointer ">
-{/* .cutom Input Radio */}
-<div className="  h-[20px] md:h-[30px] w-[20px] md:w-[30px] border md:border-[2px] rounded-full flex justify-center items-center"> <div className="h-[15px] md:h-[22px] md:w-[22px]  w-[15px] bg-myWhite rounded-full"></div> </div>
-{/* .cutom Input Radio END */}
+<div  onClick={()=>toggleCompleted( todo._id, todo.completed)} className=" flex  w-[70%] items-center gap-2 cursor-pointer ">
+<input className='scale-[1.7]' checked = { todo.completed} type="radio" name="" id="" />
 
-{/* <label
-  className="text-[22px] text-lable md:text-[25px] overflow-y-hidden overflow-x-auto h-[30px] cursor-pointer"
-  htmlFor=""
->
-  {todo.text}
-</label> */}
-
-<input
+  <input
   type="text"
-  value={todo.text}
-  className="text-myWhite w-[90%] select-none focus:outline-none focus:border-r-2 bg-myBlue overflow-x-auto cursor-text"
-  readOnly
-  name=""
-  id=""
-/>
-
-      </div>
+ value={todo.text}
+ className="text-myWhite w-[90%] select-none focus:outline-none focus:border-r-2 bg-myBlue overflow-x-auto cursor-text md:text-[20px] "
+ readOnly
+ name=""
+ id=""
+  />
+     </div>
       <div className=" flex items-center gap-2 md:gap-5">
 
 <button onClick={()=>setShowEdit(true)} className='text-[18px] md:text-[25px] cursor-pointer h-[30px] md:h-[40px] w-[30px] md:w-[40px] hover:bg-blue-400  duration-150 rounded-md' >
@@ -211,7 +215,6 @@ const updateText = async(e)=>{
 
 </button>
       </div>
-
       </div>
       <p className= 'text-[9px] md:text-[11px]  text-myHalfWhite]' >{ formatDate( todo.createdAt)}</p>
     </li>

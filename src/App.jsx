@@ -57,6 +57,7 @@ const changeMode =async (mode ="general")=>{
       }
 const logOut = async ()=>{
 
+
 try {
   setLogOuLoading(true)
 const response = await axios.get(`https://todo-server-six-ashen.vercel.app/user/logout` , { withCredentials : true} )
@@ -70,14 +71,13 @@ if(data){
 }
 } catch (error) {
   console.log("User Not Logout ::" , error);
+  toast.error("User Not Logout \n Something Went Wrong !")
 }finally { 
   setLogOuLoading(false)
 }
 }
 // https://todo-server-six-ashen.vercel.app
 const fetchTodos = async ()=>{
-
-
 try {
   const response  = await axios.get(`https://todo-server-six-ashen.vercel.app
 /todo/todos` , { withCredentials:true})
