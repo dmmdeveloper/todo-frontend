@@ -184,12 +184,13 @@ const toggleCompleted = async ( id, value)=>{
     <li className=' px:1 md:px-3' >
 <div className='flex justify-between items-center' >
 <div  onClick={()=>toggleCompleted( todo._id, todo.completed)} className=" flex  w-[70%] items-center gap-2 cursor-pointer ">
-<input className='scale-[1.7]' checked = { todo.completed} type="radio" name="" id="" />
+<input className='md:scale-[1.7]' checked = { todo.completed} type="radio" name="" id="" />
 
   <input
   type="text"
+
  value={todo.text}
- className="text-myWhite w-[90%] select-none focus:outline-none focus:border-r-2 bg-myBlue overflow-x-auto cursor-text md:text-[20px] "
+ className={`text-myWhite ${todo.completed===false ?"text-myWhite":""} w-[90%] select-none focus:outline-none focus:border-r-2 bg-myBlue overflow-x-auto cursor-text md:text-[20px] `}
  readOnly
  name=""
  id=""
