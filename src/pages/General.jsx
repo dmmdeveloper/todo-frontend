@@ -110,7 +110,7 @@ const [text,setText] = useState(todo.text)
   } 
 
 const updateText = async(e)=>{
-  
+
 
 
 
@@ -188,7 +188,6 @@ const toggleCompleted = async ( id, value)=>{
 <input className='md:scale-[1.7]' checked = { todo.completed} type="radio" name="" id="" />
   <input
   type="text"
-
  value={todo.text}
  className={`text-myWhite ${todo.completed ?"text-[#ffffff8a]":""} w-[90%] select-none focus:outline-none focus:border-r-2 bg-myBlue overflow-x-auto cursor-text md:text-[20px] `}
  readOnly
