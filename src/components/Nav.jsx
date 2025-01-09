@@ -50,7 +50,7 @@ const {logOut  ,logOutLoading , profile ,changeMode , modeLoading } = useAppCont
 
         <h1 className='md:text-3xl text-2xl text-wrap flex justify-center items-center '>
 
-         { profile.name ? profile.name :(<>
+         { profile?.name ? profile.name :(<>
           <div class="lds-facebook"><div></div><div></div><div></div></div>
          </>)}<span className='text-blue-900 italic'>'s</span> Todos
         </h1>
@@ -68,7 +68,7 @@ const {logOut  ,logOutLoading , profile ,changeMode , modeLoading } = useAppCont
           </div>
 
           {
-            profile.avatar ?
+            profile?.avatar ?
             <img className="h-full w-full rounded-full" src={ profile.avatar}alt="" />:
           <img className="h-full w-full rounded-full default-image-nav" src={todoLogo} alt="" />
           }
@@ -85,7 +85,7 @@ const {logOut  ,logOutLoading , profile ,changeMode , modeLoading } = useAppCont
             <i className="fa-solid fa-clock-rotate-left text-myBlue"></i> History
           </Link>
           {
-            profile.mode ==="general"?
+            profile?.mode ==="general"?
             <Link onClick={()=>changeMode("collection")} className="text-myBlue text-[20px] flex gap-2 items-center text-center p-2 w-[100%] hover:bg-blue-200">
             <i className="fa-solid fa-layer-group text-myBlue"></i> Collections
           </Link>:
