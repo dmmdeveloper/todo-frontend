@@ -51,8 +51,6 @@ if(data){
 }
 
 
-
-
 } catch (error) {
   console.log("Form Not Submitted"  , error);
   if(error?.response?.data){
@@ -134,7 +132,7 @@ reader.onload = ()=>{
         htmlFor="file-input"
         className="bg-[#4c99f2] flex-1 text-white px-4 py-2 rounded cursor-pointer hover:bg-[#589ce9]"
       >
-        Choose File
+        Choose Avatar
       </label>
       {/* Hidden file input */}
       <input
