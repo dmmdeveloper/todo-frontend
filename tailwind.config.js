@@ -11,6 +11,9 @@ export default {
         myWhite: 'var(--white)', // Use the CSS variable for the secondary color
         myHalfWhite: 'var(--half-white)', // Use the CSS variable for the secondary color
       },
+      grayscale: {
+        80: '80%', // Add custom grayscale value
+      },
     },
   },
   plugins: [

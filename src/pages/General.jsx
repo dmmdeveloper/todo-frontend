@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 
 export default function General() {
 
+
  const { profile , todos }  =  useAppContext()
 
   return (<>
@@ -21,6 +22,8 @@ export default function General() {
 
 {/* Todo Items */}
 {/* Here We Fetch the the Todo */}
+{
+  todos.length > 0 ?
 <div className=" mt-9">
 {
   todos.map((todo)=>{
@@ -33,13 +36,29 @@ export default function General() {
   })
 }
 </div>
-{/* 
-<ul>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-</ul> */}
+:
+<div className="mt-5 flex justify-center items-center flex-col">
+  <img 
+    className="h-[200px] w-[200px] rounded-full grayscale-80" 
+    src="https://res.cloudinary.com/dtqli9uge/image/upload/v1736495904/gkolox3cbymrxluapqs8.png" 
+    alt="Profile"
+  />
+  <h1 className="md:text-[40px] text-[30px] text-myHalfWhite">
+Happy Todos Journey!
+  </h1>
+
+    <p className="mt-2 text-myHalfWhite text-center">
+      Best of luck with your todos! Start adding tasks to make your journey productive and exciting!
+    </p>
+</div>
+
+}
+
+
+
+
+
+
 
   </div>
 </div>
@@ -112,8 +131,6 @@ const [text,setText] = useState(todo.text)
 const updateText = async(e)=>{
 
 
-
-
   e.preventDefault()
   try {
     setUpdateLoading(true)
@@ -159,7 +176,6 @@ const toggleCompleted = async ( id, value)=>{
     const formattedDate = date.toLocaleDateString(); // Format as MM/DD/YYYY
     return `${formattedHours}:${formattedMinutes} ${ampm} | ${formattedDate}`;
   };
-
 
   return(<>
   <ul className='mt-5' >
