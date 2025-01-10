@@ -189,7 +189,7 @@ const toggleCompleted = async ( id, value)=>{
   <input
   type="text"
  value={todo.text}
- className={`text-myWhite ${todo.completed ?"text-[#ffffff8a]":""} w-[90%] select-none focus:outline-none focus:border-r-2 bg-myBlue overflow-x-auto cursor-text md:text-[20px] `}
+ className={` ${todo.completed ?"text-[#ffffff8a]":"text-myWhite"}  w-[90%] select-none focus:outline-none focus:border-r-2 bg-myBlue overflow-x-auto cursor-text md:text-[20px] `}
  readOnly
  name=""
  id=""
