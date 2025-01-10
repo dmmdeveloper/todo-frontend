@@ -116,6 +116,7 @@ value={{
     // /setModeLoading
 }}
 >
+  
 <Routes>
 <Route path="/" element= {  token ? (profile?.mode === "collection" ?<Collection/> :<General/>): <Navigate to={"/login"} /> } /> 
 <Route path="/login" element ={<Login/>} /> 
