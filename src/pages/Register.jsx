@@ -130,7 +130,7 @@ reader.onload = ()=>{
       <div>
       <label
         htmlFor="file-input"
-        className="bg-[#4c99f2] flex-1 text-white px-4 py-2 rounded cursor-pointer hover:bg-[#589ce9]"
+        className="bg-[#4c99f2]  text-white px-4 py-2 rounded cursor-pointer hover:bg-[#589ce9]"
       >
         Choose Avatar
       </label>
@@ -148,7 +148,7 @@ reader.onload = ()=>{
         previweImage ?
         <img  className='h-[40px] w-[40px]' src={previweImage} alt="" />
         :
-        <span className="ml-4 text-myHalfWhite">{fileName}</span>
+        <span className=" text-myHalfWhite">{fileName}</span>
       }
     </div>
 </div>
