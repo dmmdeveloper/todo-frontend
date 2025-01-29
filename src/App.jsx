@@ -29,7 +29,6 @@ console.log(data);
 setProfile(data.data)
 } catch (error) {
     console.log("User NotFetched :))" , error);
-
 }
 
 }
@@ -87,7 +86,7 @@ try {
   setTodos(data.data)
 } catch (error) {
   console.log("todo Not Fetched :))" , error); 
-  toast.error("OOPS Todos Not Fetched !! \n Somthing Went Wrong")
+  // toast.error("OOPS Todos Not Fetched !! \n Somthing Went Wrong")
 }
 } 
 

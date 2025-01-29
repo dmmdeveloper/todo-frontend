@@ -73,7 +73,6 @@ const handleFileChange = (event) => {
     const file = event.target?.files[0];
     setAvatar(file)
     console.log(file);
-    
     setFileName(file ? file.name : 'No file chosen');
 const reader = new FileReader()
 reader.readAsDataURL(file)
