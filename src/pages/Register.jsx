@@ -35,7 +35,11 @@ const handleSubmit = async(e)=>{
 
 try {
   setLoading(true)
-const respose  =  await axios.post(`https://todo-server-six-ashen.vercel.app/user/register` , formToSend , {
+const respose  =  await axios.post(
+  `https://todo-server-six-ashen.vercel.app/user/register`
+  // `http://localhost:2000/user/register`
+
+   , formToSend , {
   withCredentials : true,
   headers:{
     "Content-Type":"multipart/form-data"

@@ -201,3 +201,99 @@
     transform: scale(1);
   }
 }
+
+
+
+/* Edit Proile Section Profile.jsx  */
+
+.edit-profile-blur-body{
+
+  min-height: 100vh;
+  height: auto;
+  width: 100%;
+  position: fixed ;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(10px);
+  /* background: #000; */
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.edit-profile-form{
+  animation:  opne-edit-form .3s linear;
+}
+
+
+
+@keyframes opne-edit-form{
+  0%{
+    position: fixed; 
+    top: -200%;
+  }
+  100%{
+    position: relative;
+    top: inherit;
+  }
+}
+
+
+/* emial-password-edit-div Prfoile.jsx */
+.emial-password-edit-div{
+
+  -webkit-animation: scale-in-ver-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: scale-in-ver-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;}
+
+ @-webkit-keyframes scale-in-ver-top {
+  0% {
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
+    -webkit-transform-origin: 100% 0%;
+            transform-origin: 100% 0%;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+    -webkit-transform-origin: 100% 0%;
+            transform-origin: 100% 0%;
+    opacity: 1;
+  }
+}
+@keyframes scale-in-ver-top {
+  0% {
+    -webkit-transform: scaleY(0);
+            transform: scaleY(0);
+    -webkit-transform-origin: 100% 0%;
+            transform-origin: 100% 0%;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+    -webkit-transform-origin: 100% 0%;
+            transform-origin: 100% 0%;
+    opacity: 1;
+  }
+}
+
+/* .verify-passwrod-popup-div Profile.jsx */
+
+
+.verify-passwrod-popup-div{
+animation: verifyPassword-Popup .2s linear;  
+/* display: none; */
+}
+
+@keyframes verifyPassword-Popup{
+  0%{
+    transform: scale(0);
+  }
+  100%{
+    transform: scale(1);
+
+  }
+}

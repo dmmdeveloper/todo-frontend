@@ -20,10 +20,15 @@ const [logOutLoading , setLogOuLoading] = useState(false)
 const [todos,setTodos]  =useState([])
 
 const navigate = useNavigate(null)
+
 const fetchProfile = async ()=>{
+
 try {
-const response = await axios.get(`https://todo-server-six-ashen.vercel.app
-/user/profile`, { withCredentials : true} )
+const response = await axios.get(
+  `https://todo-server-six-ashen.vercel.app/user/profile`,
+  // `http://localhost:2000/user/profile`,
+
+   { withCredentials : true} )
 const data = await response.data;
 console.log(data);
 setProfile(data.data)
@@ -32,7 +37,7 @@ setProfile(data.data)
 }
 
 }
-const changeMode =async (mode ="general")=>{
+const changeMode =async (mode ="general")=>{ 
     try {
       setModeLoading(true)
     const response = await axios.post(`https://todo-server-six-ashen.vercel.app/user/mode`  , { mode} , {
@@ -78,7 +83,6 @@ if(data){
 
 // https://todo-server-six-ashen.vercel.app
 const fetchTodos = async ()=>{
-
 try {
   const response  = await axios.get(`https://todo-server-six-ashen.vercel.app
 /todo/todos` , { withCredentials:true})
