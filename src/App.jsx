@@ -18,11 +18,11 @@ const [profile , setProfile] = useState([]);
 const [modeLoading , setModeLoading] = useState(false);
 const [logOutLoading , setLogOuLoading] = useState(false) 
 const [todos,setTodos]  =useState([])
+const [passwordForVerification , setPasswordForVerification] = useState("")
 
 const navigate = useNavigate(null)
 
 const fetchProfile = async ()=>{
-
 try {
 const response = await axios.get(
   `https://todo-server-six-ashen.vercel.app/user/profile`,
@@ -59,12 +59,13 @@ const changeMode =async (mode ="general")=>{
     }
       }
 const logOut = async ()=>{
-
-
-
 try {
   setLogOuLoading(true)
-const response = await axios.get(`https://todo-server-six-ashen.vercel.app/user/logout` , { withCredentials : true} )
+const response = await axios.get(
+  `https://todo-server-six-ashen.vercel.app/user/logout`
+  // `http://localhost:2000/user/logout`
+
+    , { withCredentials : true} )
 const data = await response.data
 console.log(data);
 
@@ -115,7 +116,7 @@ return (<>
 value={{
     profile ,setProfile , fetchProfile,
     changeMode ,modeLoading  , logOut  , 
-    logOutLoading , todos ,setTodos 
+    logOutLoading , todos ,setTodos  , passwordForVerification , setPasswordForVerification
     // /setModeLoading
 }}
 >

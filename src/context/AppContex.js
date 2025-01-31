@@ -12,10 +12,16 @@ const AppContext = createContext(
     logOut : ()=>{},
     logOutLoading : false,
     todos: [],
-    setTodos : ()=>{}
+    setTodos : ()=>{},
+    passwordForVerification : "",
+    setPasswordForVerification : ()=>{}
+    
     // setModeLoading : ()=>{}
     
 });
+
+// const [passwordForVerification,setPasswordForVerification] =useState("");
+
 
 
 export const AppContextProvider = AppContext.Provider;

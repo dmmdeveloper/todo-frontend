@@ -3,6 +3,7 @@ import { useAppContext } from '../context/AppContex'
 import { Link } from 'react-router-dom'
 import bcryptjs from "bcryptjs";
 import "@fortawesome/fontawesome-free/css/all.css";
+import axios from 'axios';
 
 export default function Profile() {
 
@@ -119,20 +120,19 @@ const remainingTodos = todos.filter( (t)=> t.completed === false ).length;
 
 function EditProfile({ showEdit, setShowEdit }) {
 
-const { profile } = useAppContext();
+
+const { profile , passwordForVerification , fetchProfile } = useAppContext();
+
 const [editname, setEditName] = useState(false);
 const [profilePreview , setProfilePreview] = useState(null)
 const imgRef = useRef();
+const [submitLoading , setSubmitLoading] = useState(false)
 
 // Fields
   const [name, setName] = useState(profile.name); //done
-  const [newprofile, setProfile] = useState(null);    // done
+  const [newProfile,setProfile] = useState(null);    // done
   const [email , setEmail] = useState(profile.email); // done
   const [password , setPassword] = useState("app password here"); // done
-
-
-
-
 
   // Open file input when clicking the image or camera button
 
@@ -153,12 +153,36 @@ const imgRef = useRef();
   };
 
 const hanldeSubmit = async (e)=>{
-e.preventDefault()
-  alert(`${name} ,  ${email} , ${password} ,  `)  
+
+e.preventDefault();
+
+const formData =new FormData();
+if(name != profile.name) formData.append("name" , name)
+if(email != profile.email) formData.append("email" , email);
+if(!password.includes("app") &&  password !== passwordForVerification ) formData.append("password" ,password);
+if(newProfile) {
+  formData.append("newProfile" , newProfile)
+}
+try {
+setSubmitLoading(true)
+const {data} = await axios.post(`https://todo-server-six-ashen.vercel.app/user/update`, formData , {
+  withCredentials:true,
+  headers:{
+    "Content-Type":"multipart/form-data"
+  }
+} )
+if(data) {
+  setShowEdit(false);
+  fetchProfile()
+}
+
+} catch (error) {
+  console.log("Profile not Edited ::" ,error ) ;
+}
+finally{setSubmitLoading(false)}
 }
 
   return (
-
     <div className="edit-profile-blur-body">
       <form  onSubmit={hanldeSubmit} className="edit-profile-form h-auto w-[300px] rounded-md border flex flex-col p-3">
         {/* Profile Image Section */}
@@ -189,7 +213,7 @@ e.preventDefault()
             readOnly={!editname}
             value={name}
             onChange={(e)=>setName(e.target.value)}
-            className={`text-xl rounded-md p-1 outline-none ${
+            className={`text-xl rounded-md p-1 outline-none md:w-auto w-[85%] ${
               editname ? "border-[1px] shadow-lg bg-[#2C8FFF]" : "bg-transparent text-xl border-0"
             }`}
             type="text"
@@ -217,8 +241,11 @@ e.preventDefault()
           <button className="text-xl border py-[1px] hover:opacity-70 rounded px-1" onClick={() => setShowEdit(false)}>
             Cancel
           </button>
-          <button type='submit' className="text-xl hover:opacity-70 border py-[1px] rounded px-1 bg-white text-myBlue">
-            Update
+          <button type='submit' className={`text-xl hover:opacity-70 border py-[1px] rounded px-1 bg-white text-myBlue ${submitLoading ?"bg-myBlue animate-pulse pointer-events-none cursor-not-allowed":""} `}>
+            {
+              submitLoading ? 
+"Updating...":"Update"
+            }
           </button>
         </div>
       </form>
@@ -228,12 +255,13 @@ e.preventDefault()
 
 
 function EditEmailAndPassword({email , setEmail , password , setPassword}) {
-const {profile} =useAppContext()
+
+const {profile ,passwordForVerification , setPasswordForVerification } =useAppContext()
 
 const [showEditEmailPassword , setShowEditEmailPassword] = useState(false)
 const [showVerifyPassword ,setShowVerifyPassword ]  =useState(false)
 const [isPasswordCorrect , setIsPasswordCorrect]= useState(false)
-const [passwordForVerification,setPasswordForVerification] =useState("");
+// const [passwordForVerification,setPasswordForVerification] =useState("");
 const [editEmail , setEditEmail] = useState(false)
 const [editPassword ,setEditPassword ] = useState(false) 
 const [passwordError , setPasswordError] =useState(false)
