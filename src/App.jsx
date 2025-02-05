@@ -165,7 +165,7 @@ function App() {
             path="/"
             element={
               token ? (
-                profile?.mode !== "collection" ? (
+                profile?.mode === "collection" ? (
                   <Collection />
                 ) : (
                   <General />
