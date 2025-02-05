@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -24,6 +24,7 @@ function App() {
 
 
   const navigate = useNavigate(null);
+  const location  = useLocation()
 
   const fetchProfile = async () => {
     try {
@@ -136,8 +137,25 @@ function App() {
     fetchTodos();
   }, [todos]);
 
-
   const token = localStorage.getItem("token");
+
+
+useEffect(()=>{
+const titles = {
+  "/"  : profile?.mode ==="collection" ? "Collections | My Todos App":"My Todos App" || "My Todos App",
+  "/login" : "Lgoin | My Todos App",
+  "/register":"Register | My Todos App",
+  "/select-mode" :"Select Mode | My Todos App",
+  "/profile" :`${profile?.name}'s Profile | My Todos App`
+}
+
+
+document.title = titles[location.pathname] || "My Todos App"
+
+} , [location.pathname])
+
+
+
 
   return (
     <>
