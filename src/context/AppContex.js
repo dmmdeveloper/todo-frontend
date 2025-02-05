@@ -14,8 +14,12 @@ const AppContext = createContext(
     todos: [],
     setTodos : ()=>{},
     passwordForVerification : "",
-    setPasswordForVerification : ()=>{}
-    
+    setPasswordForVerification : ()=>{},
+    // Collection
+    collections : [],
+    setCollections : ()=>{},
+    fetchCollections : ()=>{},
+
     // setModeLoading : ()=>{}
     
 });

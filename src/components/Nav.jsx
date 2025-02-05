@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContex';
-import todoLogo from "../../public/todo-logo.png"
+import todoLogo from "../../public/todo-logo.png";
 
 export default function Nav() {
   const [showNav, setShowNav] = useState(false);

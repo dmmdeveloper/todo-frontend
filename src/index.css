@@ -297,3 +297,37 @@ animation: verifyPassword-Popup .2s linear;
 
   }
 }
+
+
+/* Collection */
+.animated-expand {
+  animation: expand .3s ease-in-out forwards;
+}
+
+@keyframes expand {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+
+.show-collection-edit-name{
+animation: show-collection-edit-name .1s linear ;
+}
+
+@keyframes  show-collection-edit-name {
+  0%{
+    transform: scaleX(0);
+  }
+  100%{
+    transform: scaleX(1);
+
+
+  }
+  
+}
+
+
