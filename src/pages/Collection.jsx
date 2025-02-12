@@ -320,7 +320,7 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
 
         {/* Rename Input Field */}
         {nameEditongId === id &&  (        
-          <form className="md:h-[42px]  w-full absolute z-30 bg-myBlue shadow-sm md:gap-3 gap-1 border top-0 left-0 right-0 flex justify-between items-center show-collection-edit-name">
+          <form className="h-[42px]  w-full absolute z-30 bg-myBlue shadow-sm md:gap-3 gap-1 border top-0 left-0 right-0 flex justify-between items-center show-collection-edit-name">
 
             <input value={newName} onChange={(e)=>setNewName(e.target.value)} className="bg-transparent p-1 md:flex-1 w-[80%] h-full outline-none border-none  md:text-xl text-[17px]" type="text" />
             <button
