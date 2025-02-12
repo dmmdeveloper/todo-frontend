@@ -36,15 +36,15 @@ export default function CollectionTodos() {
         {/* <Nav/> */}
         {singleTodoError ? (
 
-          <div className="h-screen w-full bg-myBlue flex justify-center items-center text-red-700 text-3xl">
+          <div className="h-screen w-full bg-myBlue flex justify-start items-center flex-col">
             {" "}
             OOPs :) Some Thing Went Wront
           </div>
         ) : SingleTodoLoading ? (
 
-          <div className="h-screen w-full bg-myBlue flex justify-center items-center text-white text-3xl">
+          <div className="h-screen w-full bg-myBlue flex justify-start items-center flex-col">
             {" "}
-            Loading.......
+            <CollectionTodoPageSkeleton/>
           </div>
         ) : (
           <>
@@ -69,10 +69,13 @@ export default function CollectionTodos() {
 }
 
 function PieChart({ name, time, progressPercentage, completed, total }) {
+
   return (
     <>
       <header>
         <section className="h-auto md:pt-5 pt-3 flex justify-center flex-col items-center">
+
+
           <div className="relative md:w-40  md:h-40 h-32 w-32  flex items-center justify-center">
             {/* Pie Chart Shape */}
             <div
@@ -170,7 +173,6 @@ const [showEditInput , setShowEditInput] = useState(null);
   </div>
   </>) 
 }
-
 function TodoForm({id}) {
 
 const [text ,setText] = useState("");
@@ -234,6 +236,7 @@ const handleSubmit = async  (e)=>{
 };
 
 function TodoItem({  text ,index , _id , showEditInput , setShowEditInput , completed , collectionId ,time}) {
+
 const {fetchCollectionTodo } = useAppContext();
 const [newText ,setText] =useState(text)
 const [deleteLoading , setDeleteLoading] = useState(false)
@@ -358,6 +361,7 @@ onSubmit={updateText}
 className="md:h-[45px] h-[37px] show-collection-edit-name w-full origin-left absolute top-0 border bg-myBlue items-center flex gap-3">
 
   <input type="text" value={newText} onChange={(e)=>setText(e.target.value)} className="flex-1 text-xl w-full bg-transparent h-full border-none outline-none p-1" />
+
   <button type="submit" className="md:w-[70px] w-[60px] hover:opacity-90 bg-white text-myBlue h-[90%] mr-1 text-xl flex justify-center items-center" > 
     {
       updateTextLoading ?
@@ -379,3 +383,72 @@ className="md:h-[45px] h-[37px] show-collection-edit-name w-full origin-left abs
   </>)
   
 } 
+
+
+function CollectionTodoPageSkeleton() {
+  return(<>
+<div className=" w-fill md:w-[40%] ">
+{/* Pie Chart */}
+  <div className="">
+  
+    <div className="md:w-40 md:h-40 h-32 w-32 bg-myHalfWhite animate-pulse mx-auto rounded-full md:mt-5  mt-3"></div>
+
+    <div className="h-[20px] w-[300px] rounded-md bg-myHalfWhite animate-pulse mx-auto mt-1"></div>
+
+  </div>
+
+{/* Form */}
+<form className=" mx-auto w-full border md:h-[40px] h-[30px] flex md:gap-3 gap-2 items-center mt-7">
+
+  <input
+readOnly
+    type="text"
+    className="bg-transparent outline-none border-none placeholder:text-myHalfWhite  md:flex-grow w-[80%] h-full px-2"
+    placeholder="Add Todo"
+  />
+  <button disabled type="submit" className="md:h-[34px] cursor-not-allowed  h-[26px] md:text-2xl text-[20px] flex justify-center items-center md:w-[100px] w-[70px] bg-white text-myBlue  mr-[2px] md:mr-1">
+    Add
+    </button>
+
+ 
+</form>
+
+{/* Todo Items */}
+<div className="mt-7" >
+{
+  Array.from({length:7}).map((_ , index)=>{
+    return(<>
+    
+    
+    <div key={index} className="md:h-[40px] h-[35px]   md:gap-3 gap-1 flex mt-2 md:mt-3 items-center ">
+
+<div className="w-full">
+    <div className="h-[20px] w-[70%] rounded-md bg-myHalfWhite animate-pulse mt-1"></div>
+
+    <div className="h-[10px] w-[30%] rounded-md bg-myHalfWhite animate-pulse mt-1"></div>
+    
+</div>
+
+<div className="flex md:gap-5 gap-3">
+<div className="h-[20px] w-[20px]  rounded-md bg-myHalfWhite animate-pulse "></div>
+
+<div className="h-[20px] w-[20px]  rounded-md bg-myHalfWhite animate-pulse "></div>
+</div>
+
+
+</div>
+    </>)
+  })
+}
+
+
+
+</div>
+
+
+</div>
+
+  
+  </>)
+  
+}

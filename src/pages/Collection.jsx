@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Nav from "../components/Nav";
 import { useAppContext } from "../context/AppContex";
 import axios from "axios";
@@ -58,7 +58,8 @@ function CreateCollection() {
   const [openCollectionNameInput, setOpenCollectionNameInput] = useState(false);
   const [name, setInput] = useState("");
   const [loading , setLoading] =useState(false)
-  const {collections}  =useAppContext()
+  const {collections}  =useAppContext();
+  const inputRef = useRef("")
 
   const handleSubmit = async (e) => {
 
@@ -101,6 +102,7 @@ if(data){
         
           {openCollectionNameInput ? (
             <input
+            ref={inputRef}
             required
               value={name}
               onChange={(e) => setInput(e.target.value)}
@@ -136,6 +138,7 @@ if(data){
               onClick={(e) => {
                 e.preventDefault();
                 setOpenCollectionNameInput(true);
+                inputRef.current.focus();
               }}
               className="md:h-[40px] h-[35px] w-[35px]  md:w-[40px] border-[2px] md:text-2xl text-[20px] rounded-full flex justify-center items-center hover:opacity-80"
             >
