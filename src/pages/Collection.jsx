@@ -307,7 +307,7 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
           {/* Delete */}
           <button 
   onClick={deleteTodo} 
-  className="relative flex items-center justify-center   bg-opacity-20"
+  className="relative flex items-center justify-center h-5 w-5 bg-opacity-20"
   disabled={loadingDelete}
 >
   {loadingDelete ? (

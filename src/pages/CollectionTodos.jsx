@@ -44,9 +44,7 @@ export default function CollectionTodos() {
 
           <div className="h-screen w-full bg-myBlue flex justify-center items-center text-white text-3xl">
             {" "}
-
             Loading.......
-  
           </div>
         ) : (
           <>
@@ -93,7 +91,7 @@ function PieChart({ name, time, progressPercentage, completed, total }) {
             <input
               value={name}
               readOnly
-              className="md:text-3xl md:w-[50%] w-[70%] text-2xl mx-auto font-bold bg-transparent outline-none border-none text-center"
+              className="md:text-3xl w-[70%] md:w-[90%] text-2xl mx-auto font-bold bg-transparent outline-none border-none text-center"
             />
             <p className="text-end mx-auto md:w-[50%] w-[80%] text-myHalfWhite text-[15px]">{time}</p>
           </div>
@@ -138,25 +136,27 @@ const [showEditInput , setShowEditInput] = useState(null);
 {/* When Create a new Todo then it's Sketon shows */}
 {
   createCollectionTodoLoading && (<>
- <div  className="w-[80%]  mx-auto relative h-[40px] flex items-center gap-2 mt-3">
+
+ <div  className=" w-full md:w-[80%]  mx-auto relative h-[40px] flex items-center gap-2 mt-3">
 
 <div className="h-[30px] w-[30px] bg-myHalfWhite animate-pulse rounded-md"></div>
 
 <div className=" flex-1 w-full">
 
-  <h2 className="h-[20px] w-[80%] bg-myHalfWhite rounded-md animate-pulse" ></h2>
-  <p className="h-[10px] w-[130px] animate-pulse bg-myHalfWhite mt-1 rounded-md" ></p>
+  <h2 className="h-[20px] w-full md:w-[80%] bg-myHalfWhite rounded-md animate-pulse" ></h2>
+  <p className=" h-[7px] md:h-[10px] w-[100px] md:w-[130px] animate-pulse bg-myHalfWhite mt-1 rounded-md" ></p>
 </div>
 
 <div className=" flex gap-5">
 
-<button className="h-[25px] w-[25px] bg-myHalfWhite rounded-md animate-pulse" ></button>
-<button className="h-[25px] w-[25px] bg-myHalfWhite rounded-md animate-pulse" ></button>
+<button className="md:h-[25px] h-[20px] md:w-[25px] w-[20px] bg-myHalfWhite rounded-md animate-pulse" ></button>
+<button className="md:h-[25px] h-[20px] md:w-[25px] w-[20px] bg-myHalfWhite rounded-md animate-pulse" ></button>
 </div>
  </div>  
   </>)
 }
-    <AnimatePresence>
+<div className="mt-7" > 
+     <AnimatePresence >
 {
   singleCollection?.todos.map((todo , index)=>{
     return(<>
@@ -166,6 +166,7 @@ const [showEditInput , setShowEditInput] = useState(null);
   })
 }
 </AnimatePresence>
+</div>
   </div>
   </>) 
 }
