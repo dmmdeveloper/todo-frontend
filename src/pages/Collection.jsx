@@ -18,6 +18,7 @@ export default function Collection() {
         {/* Content */}
         <section className="md:w-[60%] w-full mx-auto min-h-[300px] h-auto  mt-7">
           {/* Create Collection Name */}
+
           <CreateCollection />
 
           {/* Collection Items */}
@@ -54,8 +55,6 @@ export default function Collection() {
 }
 
 function CreateCollection() {
-
-
   const [openCollectionNameInput, setOpenCollectionNameInput] = useState(false);
   const [name, setInput] = useState("");
   const [loading , setLoading] =useState(false)
@@ -105,32 +104,29 @@ if(data){
             required
               value={name}
               onChange={(e) => setInput(e.target.value)}
-              className={`h-[40px] w-[80%] absolute text-xl top-0 right-0 animated-expand 
+              className={`md:h-[40px] h-[30px] w-[80%] absolute md:text-xl text-[17px] top-0 right-0 animated-expand 
               ${loading ? "collap-input-loading":""} bg-myBlue border outline-none px-3 rounded-tl-[30px] rounded-bl-[30px] shadow-sm focus:shadow-md focus:border-[2px] placeholder:text-[#ffffff95] z-20`}
               placeholder="Enter Collection Name"
               type="text"
             />
           ) : 
-          <span className="text-2xl px-2">
+          <span className="md:text-2xl text-[20px]  md:px-2 px-1">
             {
               collections.length > 0?
               "Create a New Collection":
               "Start Creating Collection"
-            }
-            {
-              
             }
             </span>
           }
         </div>
 
         {/* Button section with fixed width */}
-        <div className="w-[43px] flex justify-center">
+        <div className="md:w-[43px] w-[37px] flex justify-center">
           {openCollectionNameInput ? (
             <button
               title="Save"
               type="submit"
-              className="h-[40px] w-[40px] border-[2px] text-2xl rounded-full flex justify-center items-center hover:opacity-80"
+              className="md:h-[40px] h-[35px] w-[35px]  md:w-[40px] border-[2px] md:text-2xl text-[20px] rounded-full flex justify-center items-center hover:opacity-80"
             >
               <i class="fa-solid fa-folder-open"></i>
             </button>
@@ -141,7 +137,7 @@ if(data){
                 e.preventDefault();
                 setOpenCollectionNameInput(true);
               }}
-              className="h-[40px] w-[40px] border-[2px] text-2xl rounded-full flex justify-center items-center hover:opacity-80"
+              className="md:h-[40px] h-[35px] w-[35px]  md:w-[40px] border-[2px] md:text-2xl text-[20px] rounded-full flex justify-center items-center hover:opacity-80"
             >
               <i className="fa-solid fa-plus"></i>
             </button>
