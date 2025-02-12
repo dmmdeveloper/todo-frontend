@@ -31,6 +31,7 @@ export default function CollectionTodos() {
   }, [id]);
 
   return (
+
     <>
       <div className="min-h-screen h-auto w-full bg-myBlue pb-9">
         {/* <Nav/> */}
@@ -128,11 +129,10 @@ function Options() {
   
 }
 
+
 function CollectionTodo({collectionId  ,collection} ){
-
-const { singleCollection ,createCollectionTodoLoading } = useAppContext();
+const { singleCollection ,createCollectionTodoLoading  } = useAppContext();
 const [showEditInput , setShowEditInput] = useState(null);
-
   return(<>
   <div className="md:w-[50%] mx-auto w-full  mt-3">
     <TodoForm  id={collectionId}/>
@@ -140,17 +140,18 @@ const [showEditInput , setShowEditInput] = useState(null);
 {
   createCollectionTodoLoading && (<>
 
- <div  className=" w-full md:w-[80%]  mx-auto relative h-[40px] flex items-center gap-2 mt-3">
+ <div className="w-[90%] md:w-[80%]  mx-auto relative md:h-[40px] h-[30px]  pb-4 mt-5 flex items-center gap-2">
 
-<div className="h-[30px] w-[30px] bg-myHalfWhite animate-pulse rounded-md"></div>
+
+<div className="md:h-[30px] md:w-[30px] h-[22px] w-[22px] bg-myHalfWhite animate-pulse rounded-md"></div>
 
 <div className=" flex-1 w-full">
 
-  <h2 className="h-[20px] w-full md:w-[80%] bg-myHalfWhite rounded-md animate-pulse" ></h2>
-  <p className=" h-[7px] md:h-[10px] w-[100px] md:w-[130px] animate-pulse bg-myHalfWhite mt-1 rounded-md" ></p>
+  <h2 className="md:h-[20px] h-[15px] w-[90%] md:w-[80%] bg-myHalfWhite rounded-md animate-pulse" ></h2>
+  <p className=" h-[9px] md:h-[10px] w-[100px] md:w-[130px] animate-pulse bg-myHalfWhite mt-1 rounded-md" ></p>
 </div>
 
-<div className=" flex gap-5">
+<div className=" flex md:gap-5 gap-3">
 
 <button className="md:h-[25px] h-[20px] md:w-[25px] w-[20px] bg-myHalfWhite rounded-md animate-pulse" ></button>
 <button className="md:h-[25px] h-[20px] md:w-[25px] w-[20px] bg-myHalfWhite rounded-md animate-pulse" ></button>
@@ -158,7 +159,7 @@ const [showEditInput , setShowEditInput] = useState(null);
  </div>  
   </>)
 }
-<div className="mt-7" > 
+<div className={`${createCollectionTodoLoading ? "mt-3" :"mt-7"}`} > 
      <AnimatePresence >
 {
   singleCollection?.todos.map((todo , index)=>{
@@ -237,11 +238,13 @@ const handleSubmit = async  (e)=>{
 
 function TodoItem({  text ,index , _id , showEditInput , setShowEditInput , completed , collectionId ,time}) {
 
+
 const {fetchCollectionTodo } = useAppContext();
 const [newText ,setText] =useState(text)
 const [deleteLoading , setDeleteLoading] = useState(false)
 const [updateTextLoading  ,setUpdateTextLoading] =useState(false) 
 
+const {createCollectionTodoLoading} = useAppContext()
   const deleteTodo = async ()=>{
     try {
       setDeleteLoading(true)
@@ -283,8 +286,6 @@ const [updateTextLoading  ,setUpdateTextLoading] =useState(false)
   }
 
   const updateText = async(e)=>{
-
-
     e.preventDefault();
     try {
       setUpdateTextLoading(true)
@@ -311,12 +312,12 @@ const [updateTextLoading  ,setUpdateTextLoading] =useState(false)
       
     }finally{ setUpdateTextLoading(false)}
   }
-
   return (<>
 <motion.div initial={{ opacity: 0, x: index %2 === 0 ? -20 : 20 }} 
+
             animate={{ opacity: 1, x: 0 }} 
             transition={{ duration: 0.5 }}
-             className="md:w-[80%] w-[95%] mx-auto relative md:h-[40px] h-[35px]  flex items-center md:gap-3 gap-1 mt-2 md:mt-3">
+             className={`md:w-[80%] w-[95%] mx-auto relative md:h-[40px] h-[35px]  flex items-center md:gap-3 gap-1 mt-2 md:mt-3`}>
   {/* Check box */}
 
   <div  className="md:h-[30px] h-[25px]  md:w-[30px] w-[25px] flex justify-center items-center">
@@ -381,10 +382,7 @@ className="md:h-[45px] h-[37px] show-collection-edit-name w-full origin-left abs
 
 </motion.div>
   </>)
-  
 } 
-
-
 function CollectionTodoPageSkeleton() {
   return(<>
 <div className=" w-fill md:w-[40%] ">
