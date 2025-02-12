@@ -8,6 +8,7 @@ import { useAppContext } from "../context/AppContex";
 import { motion  , AnimatePresence} from "framer-motion";
 
 export default function CollectionTodos() {
+
   const { id } = useParams();
   const [collection, setCollection] = useState(null);
   const [error, setError] = useState(false);
@@ -43,7 +44,9 @@ export default function CollectionTodos() {
 
           <div className="h-screen w-full bg-myBlue flex justify-center items-center text-white text-3xl">
             {" "}
+
             Loading.......
+  
           </div>
         ) : (
           <>
@@ -72,8 +75,8 @@ function PieChart({ name, time, progressPercentage, completed, total }) {
   return (
     <>
       <header>
-        <section className="h-auto pt-5 flex justify-center flex-col items-center">
-          <div className="relative w-40 h-40 flex items-center justify-center">
+        <section className="h-auto md:pt-5 pt-3 flex justify-center flex-col items-center">
+          <div className="relative md:w-40 md:h-40 h-[30px] w-[30px]  flex items-center justify-center">
             {/* Pie Chart Shape */}
             <div
               className="w-full h-full rounded-full"
@@ -91,9 +94,9 @@ function PieChart({ name, time, progressPercentage, completed, total }) {
             <input
               value={name}
               readOnly
-              className="text-3xl font-bold bg-transparent outline-none border-none text-center"
+              className="md:text-3xl w-[50%] text-2xl font-bold bg-transparent outline-none border-none text-center"
             />
-            <p className="text-end text-myHalfWhite text-[15px]">{time}</p>
+            <p className="md:text-end text-center text-myHalfWhite text-[15px]">{time}</p>
           </div>
         </section>
       </header>
