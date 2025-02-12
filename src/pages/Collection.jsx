@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export default function Collection() {
 
-  const { profile  ,collections } = useAppContext();
+  const {  collections } = useAppContext();
   const [nameEditongId , setNameEditingId] = useState(null)
 
   return (
