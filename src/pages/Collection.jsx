@@ -150,9 +150,6 @@ if(data){
 
 
 function CollectionItem({ name, id, time, todos   ,nameEditongId , setNameEditingId }) {
-
-  
-
   const { fetchCollections } = useAppContext();
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [actionType, setActionType] = useState(""); // Track which action (Select/Unselect)
@@ -240,12 +237,14 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
     }finally{ setNewNameSavedLoading (false)}
   }
   return (
+
     <>
       {/* Main Collection Item */}
-      <div className="h-[40px] relative w-[95%] mx-auto flex gap-1 mt-9 items-center">
+      <div className="md:h-[40px] h-[35px] relative w-[95%] mx-auto flex gap-1 mt-5 md:mt-9 items-center">
         
         {/* Progress Circle */}
         <div 
+
           className="relative flex items-center justify-center md:w-[40px] md:h-[40px] h-[35px] w-[35px] rounded-full"
           style={{
             background: `conic-gradient(#00000087 ${progressPercentage}% 0%, #FFFFFF ${progressPercentage}% 100%)`
@@ -259,23 +258,22 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
 
         {/* Collection Info */}
         <div className="h-full flex-1 flex flex-col justify-center">
-
 <Link to={`/collection/todos/${id}`} className="cursor-pointer" >
           <input
             type="text"
             value={name}
-            className={`md:font-bold cursor-pointer font-[500] bg-transparent outline-none border-none md:text-[27px] text-[23px] z-10 w-full 
+            className={`md:font-bold cursor-pointer font-[500] bg-transparent outline-none border-none md:text-[27px] text-[23px] z-10 w-full relative md:top-0 top-1 
             ${todos.length > 0 && completed !== 0 ? (todos.length === completed ? 'opacity-50' : '') : ''}`}
             readOnly
           />
-          <time className="md:text-[12px] text-[10px] text-[#ffffffb2] relative bottom-[5px] md:bottom-[7px]">
+          <time className="md:text-[12px] text-[10px] text-[#ffffffb2] relative md:bottom-[7px]">
             {formatCreatedAt(time)}
           </time>
           </Link>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex h-full items-center justify-end gap-4 md:text-2xl text-[20px] w-[auto]">
+        <div className="flex h-full items-center justify-end md:gap-4 gap-2 md:text-2xl text-[18px] w-[auto]">
 
           
           {/* Rename */}
@@ -285,6 +283,7 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
 
           {/* Completed/Uncompleted with Pop-up Confirmation */}
           <button
+
             title={
               todos.length === 0
                 ? "Create todos"
@@ -320,8 +319,9 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
 
         {/* Rename Input Field */}
         {nameEditongId === id &&  (        
-          <form className="h-[42px] w-full absolute z-30 bg-myBlue shadow-sm gap-3 border top-0 left-0 right-0 flex justify-between items-center show-collection-edit-name">
-            <input value={newName} onChange={(e)=>setNewName(e.target.value)} className="bg-transparent p-1 flex-1 h-full outline-none border-none text-xl" type="text" />
+          <form className="md:h-[42px] h-[30px]  w-full absolute z-30 bg-myBlue shadow-sm md:gap-3 gap-1 border top-0 left-0 right-0 flex justify-between items-center show-collection-edit-name">
+
+            <input value={newName} onChange={(e)=>setNewName(e.target.value)} className="bg-transparent p-1 md:flex-1 w-[80%] h-full outline-none border-none  md:text-xl text-[17px]" type="text" />
             <button
             type="submit"
               className="md:h-[36px] h-[32px] md:w-[80px] w-[60px] bg-white text-myBlue mr-[2px] text-xl hover:opacity-90 cursor-pointer flex justify-center items-center"
