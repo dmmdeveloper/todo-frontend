@@ -71,12 +71,11 @@ export default function CollectionTodos() {
 }
 
 function PieChart({ name, time, progressPercentage, completed, total }) {
-
   return (
     <>
       <header>
         <section className="h-auto md:pt-5 pt-3 flex justify-center flex-col items-center">
-          <div className="relative md:w-40 md:h-40 h-30 w-30  flex items-center justify-center">
+          <div className="relative md:w-40  md:h-40 h-32 w-32  flex items-center justify-center">
             {/* Pie Chart Shape */}
             <div
               className="w-full h-full rounded-full"
