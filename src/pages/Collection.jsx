@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import Nav from "../components/Nav";
 import { useAppContext } from "../context/AppContex";
 import axios from "axios";
+import { formatCreatedAt } from "../utils/ConvertIntoSimpleTime.js";
+import { Link } from "react-router-dom";
 
 export default function Collection() {
-  const { profile  ,collections } = useAppContext();
 
+  const { profile  ,collections } = useAppContext();
+  const [nameEditongId , setNameEditingId] = useState(null)
 
   return (
+
     <>
       <div className="min-h-screen h-auto w-full bg-myBlue pb-9">
         <Nav />
@@ -18,19 +22,29 @@ export default function Collection() {
 
           {/* Collection Items */}
           <section className="mt-7 md:w-[80%] w-full mx-auto" >
-
             <ul>
-{
-  collections.map((collection)=>{
-    return(<>
-    
-    <li key={collection?._id} >
-            <CollectionItem name = { collection?.name} />
-              </li>
-    </>)
-  })
+            {
+              !collections.length  > 0
+    ? Array.from({ length: 5 }).map((_, index) => (
+
+        <li key={index}>
+          <CollectionSkeleton />
+        </li>
+      ))
+    : collections.map((collection) => (
+        <li key={collection?._id}>
+          <CollectionItem
+            name={collection?.name}
+            id={collection?._id}
+            time={collection?.createdAt}
+            todos={collection?.todos}
+            nameEditongId={nameEditongId}
+            setNameEditingId={setNameEditingId}
+          />
+        </li>
+      ))
 }
-      
+
             </ul>
               </section>
         </section>
@@ -39,21 +53,23 @@ export default function Collection() {
   );
 }
 
-
 function CreateCollection() {
+
 
   const [openCollectionNameInput, setOpenCollectionNameInput] = useState(false);
   const [name, setInput] = useState("");
+  const [loading , setLoading] =useState(false)
+  const {collections}  =useAppContext()
 
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-
     try {
+      setLoading(true)
       // http://localhost:2000/collection/create
       const response = await axios.post(
-
-        `http://localhost:2000/collection/create`,
+        // `http://localhost:2000/collection/create`,
+        `https://todo-server-six-ashen.vercel.app/collection/create`,
         { name },
         {
           withCredentials:true,
@@ -71,10 +87,11 @@ if(data){
     } catch (error) {
       console.log("Collection Not Created :)", error);
       
-    }
+    }finally{setLoading(false)}
   };
 
   return (
+
     <>
       <form
         onSubmit={handleSubmit}
@@ -82,18 +99,28 @@ if(data){
       >
         {/* Text section grows automatically */}
         <div className=" flex-1 p-1 relative">
-
+        
           {openCollectionNameInput ? (
             <input
             required
               value={name}
               onChange={(e) => setInput(e.target.value)}
-              className="h-[40px] w-[80%] absolute text-xl top-0 right-0 animated-expand bg-myBlue border outline-none px-3 rounded-tl-[30px] rounded-bl-[30px] shadow-sm focus:shadow-md focus:border-[2px] placeholder:text-[#ffffff95] z-20"
+              className={`h-[40px] w-[80%] absolute text-xl top-0 right-0 animated-expand 
+              ${loading ? "collap-input-loading":""} bg-myBlue border outline-none px-3 rounded-tl-[30px] rounded-bl-[30px] shadow-sm focus:shadow-md focus:border-[2px] placeholder:text-[#ffffff95] z-20`}
               placeholder="Enter Collection Name"
               type="text"
             />
           ) : 
-          <span className="text-2xl px-2">Start Creating Collections</span>
+          <span className="text-2xl px-2">
+            {
+              collections.length > 0?
+              "Create a New Collection":
+              "Start Creating Collection"
+            }
+            {
+              
+            }
+            </span>
           }
         </div>
 
@@ -125,73 +152,277 @@ if(data){
   );
 }
 
-function CollectionItem({name}) {
 
+function CollectionItem({ name, id, time, todos   ,nameEditongId , setNameEditingId }) {
 
-  const  [ showEditName , setShowEditName] = useState(false)
-
-  return(<>
-<div className="h-[40px] relative w-[95%]  mx-auto flex gap-1 mt-9 items-center">
-
-
-  {/* Progress Circle - Fixed Width */}
-  <div className="relative flex items-center justify-center md:w-[40px] md:h-[40px] h-[35px] w-[35px] rounded-full  bg-[conic-gradient(#00000087_0%_70%,#FFFFFF_70%_100%)]">
-
-    {/* Inner Circle */}
-    <div className="absolute md:w-[33px] md:h-[33px] h-[30px] w-[30px] bg-myBlue text-black rounded-full"></div>
-    
-    {/* Centered Text */}
-    <span className="absolute md:text-sm text-[12px] text-white">6/10</span>
-  </div>
-
-  {/* Collection and Date - Flexible Width */}
-  <div className="h-full flex-1 flex flex-col justify-center">
-
-
-    <input type="text"  
-      value={name} 
-      className="md:font-bold font-[500] bg-transparent outline-none border-none md:text-[27px] text-[23px] z-10 truncate w-full"
-      readOnly 
-    />
-    <time className="md:text-[12px] text-[10px] text-[#ffffffb2] relative bottom-[5px] md:bottom-[7px]">2:56 AM | 01/01/25</time>
-  </div>
-
-  {/* Action Buttons - Auto Adjust Width */}
-  <div className="flex h-full items-center justify-end gap-4 md:text-2xl text-[20px] w-[auto]">
-    {/* Rename */}
-    <div>
-    <button onClick={()=>setShowEditName(true)} className="hover:opacity-80 "><i className="fa-solid fa-pen"></i></button>
-    </div>
-    {/* Completed/Uncompleted */}
-    <button className=" hover:opacity-80" >
-      <i className="fa-regular fa-square-check text-[#fdf8f8a4]"></i>
-    </button>
-
-    {/* Delete */}
-      <i className="fa-solid fa-trash hover:opacity-80 cursor-pointer"></i>
-  </div>
-
-
-
-
-  {/* Edited Input */}
-
-  {
-    showEditName ?
-    <div className="h-[42px]  w-full absolute z-30 bg-myBlue shadow-sm gap-3 border top-0 left-0 right-0  show-collection-edit-name flex justify-between items-center">
-    <input value={"Coding "} className="bg-transparent p-1  flex-1 h-full outline-none border-none text-xl" type="text" />
-
-    <button className="md:h-[36px] h-[32px] md:w-[80px] w-[60px] bg-white text-myBlue mr-[2px] text-xl hover:opacity-90 cursor-pointer]" onClick={()=>setShowEditName(false)} >Save</button>
-
-  </div>:""
-
-  }
-
-
-
-</div>
-
-
-    </>)
   
+
+  const { fetchCollections } = useAppContext();
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [actionType, setActionType] = useState(""); // Track which action (Select/Unselect)
+const [loading  , setLoading] = useState(false);
+const [loadingDelete ,setLoadingDelete]  =useState(false)
+const [newName , setNewName] = useState(name);
+const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
+
+  const completed = todos.filter((todo) => todo.completed === true).length;
+  const progressPercentage = todos.length === 0 ? 0 : (completed / todos.length) * 100;
+
+  const unCompletedAllTodos = async () => {
+  
+    try {
+      const response = await axios.put(`https://todo-server-six-ashen.vercel.app/collection/uncompleted/${id}`, { withCredentials: true });
+      const data = response.data;
+      console.log(data);
+      if (data) fetchCollections();
+    } catch (error) {
+      console.log("Todo Not Completed ::", error);
+    }
+  };
+
+  const completedAllTodos = async () => {
+
+    try {
+      const response = await axios.put(`https://todo-server-six-ashen.vercel.app/collection/completed/${id}`, { withCredentials: true });
+      const data = response.data;
+      console.log(data);
+      if (data) fetchCollections();
+    } catch (error) {
+      console.log("Todo Not Completed ::", error);
+    }
+  };
+  const deleteTodo = async ()=>{
+    try {
+      setLoadingDelete(true)
+      const response = await axios.delete(
+        // `http://localhost:2000/collection/delete/${id}`
+        `https://todo-server-six-ashen.vercel.app/collection/delete/${id}`
+         , { withCredentials : true})
+      const data = await response.data;
+      console.log(data);
+
+    } catch (error) {
+      console.log("Todo Not Deleted :)", error); 
+    }finally{
+      setLoadingDelete(false)
+    }
+    }
+  // Handle confirmation and execute the action
+  const handleConfirmAction = async () => {
+
+    setLoading(true);
+    if (actionType === "select") {
+      await completedAllTodos();
+    } else {
+      await unCompletedAllTodos();
+    }
+    setLoading(false);
+    setShowConfirmPopup(false); // Close popup only after completion
+  };
+
+  // http://localhost:2000/collection/edit-name/67a49ba3f93a3aecec66a005
+  const editName = async (e)=>{
+    e.preventDefault()
+    try {
+      
+      setNewNameSavedLoading(true)
+      const response = await axios.put(`https://todo-server-six-ashen.vercel.app/collection/edit-name/${id}` , {
+        text  : newName
+      } , 
+      {
+        withCredentials : true , 
+        headers:{
+          "Content-Type" :"application/json"
+        }
+      }
+    )
+    const data = await response.data;
+    console.log(data);
+    if(data) setNameEditingId(null)
+    } catch (error) {
+      console.log("Collection Not Renamed :)" , error); 
+    }finally{ setNewNameSavedLoading (false)}
+  }
+  return (
+    <>
+      {/* Main Collection Item */}
+      <div className="h-[40px] relative w-[95%] mx-auto flex gap-1 mt-9 items-center">
+        
+        {/* Progress Circle */}
+        <div 
+          className="relative flex items-center justify-center md:w-[40px] md:h-[40px] h-[35px] w-[35px] rounded-full"
+          style={{
+            background: `conic-gradient(#00000087 ${progressPercentage}% 0%, #FFFFFF ${progressPercentage}% 100%)`
+          }}
+        >
+          <div className="absolute md:w-[33px] md:h-[33px] h-[30px] w-[30px] bg-myBlue text-black rounded-full"></div>
+          <span className="absolute md:text-[12px] font-bold text-[12px] text-white">
+            {completed}/{todos.length}
+          </span>
+        </div>
+
+        {/* Collection Info */}
+        <div className="h-full flex-1 flex flex-col justify-center">
+
+<Link to={`/collection/todos/${id}`} className="cursor-pointer" >
+          <input
+            type="text"
+            value={name}
+            className={`md:font-bold cursor-pointer font-[500] bg-transparent outline-none border-none md:text-[27px] text-[23px] z-10 w-full 
+            ${todos.length > 0 && completed !== 0 ? (todos.length === completed ? 'opacity-50' : '') : ''}`}
+            readOnly
+          />
+          <time className="md:text-[12px] text-[10px] text-[#ffffffb2] relative bottom-[5px] md:bottom-[7px]">
+            {formatCreatedAt(time)}
+          </time>
+          </Link>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex h-full items-center justify-end gap-4 md:text-2xl text-[20px] w-[auto]">
+
+          
+          {/* Rename */}
+          <button onClick={() => setNameEditingId(id)} className="hover:opacity-80">
+            <i className="fa-solid fa-pen"></i>
+          </button>
+
+          {/* Completed/Uncompleted with Pop-up Confirmation */}
+          <button
+            title={
+              todos.length === 0
+                ? "Create todos"
+                : completed === todos.length
+                ? "Unselect all"
+                : "Select all"
+            }
+            onClick={() => {
+              if (todos.length === 0) return;
+              setActionType(completed === todos.length ? "unselect" : "select");
+              setShowConfirmPopup(true);
+            }}
+            disabled={todos.length === 0}
+            className={`hover:opacity-80 ${todos.length === 0 ? 'cursor-not-allowed opacity-50' : ''}`}
+          >
+            <i className={`fa-regular fa-square-check ${
+              todos.length === 0 ? 'text-gray-400' : completed === todos.length ? 'text-white' : 'text-[#fdf8f8a4]'
+            }`}></i>
+          </button>
+          {/* Delete */}
+          <button 
+  onClick={deleteTodo} 
+  className="relative w-[40px] h-[40px] flex items-center justify-center   bg-opacity-20"
+  disabled={loadingDelete}
+>
+  {loadingDelete ? (
+    <div className="absolute w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+  ) : (
+    <i className="fa-solid fa-trash text-white hover:opacity-80"></i>
+  )}
+</button>
+        </div>
+
+        {/* Rename Input Field */}
+        {nameEditongId === id &&  (        
+          <form className="h-[42px] w-full absolute z-30 bg-myBlue shadow-sm gap-3 border top-0 left-0 right-0 flex justify-between items-center show-collection-edit-name">
+            <input value={newName} onChange={(e)=>setNewName(e.target.value)} className="bg-transparent p-1 flex-1 h-full outline-none border-none text-xl" type="text" />
+            <button
+            type="submit"
+              className="md:h-[36px] h-[32px] md:w-[80px] w-[60px] bg-white text-myBlue mr-[2px] text-xl hover:opacity-90 cursor-pointer flex justify-center items-center"
+              onClick={editName}
+            >
+              {
+                newNameSavedLoading ?
+                <div className=" h-[30px] w-[30px] border-2 border-[#6e6ee4] border-t-transparent rounded-full animate-spin"></div>
+                :"Save"
+            }
+
+
+            </button>
+
+
+          </form>
+        )}
+      </div>
+      {/* Custom Confirmation Modal */}
+      {showConfirmPopup && (
+
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
+
+          <div className="bg-myBlue select-all-permision-popup border-[2px] rounded-lg p-5 w-[300px] text-center shadow-lg">
+            <p className="text-lg font-semibold">
+              {actionType === "select" ? "Select all todos?" : "Unselect all todos?"}
+            </p>
+            <div className="flex justify-around mt-4">
+              <button
+                onClick={() => setShowConfirmPopup(false)}
+                className="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded"
+                disabled={loading}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmAction}
+                className={`px-4 py-2 rounded flex items-center justify-center ${
+                  loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600 text-white"
+                }`}
+                disabled={loading}
+              >
+                {loading ? (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  "Yes"
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
+
+
+
+const CollectionSkeleton = () => {
+
+  return (
+    <div className="h-[40px] relative w-[95%] mx-auto animate-pulse flex gap-1 mt-9 items-center ">
+
+      {/* Progress Circle */}
+      <div className="relative flex items-center justify-center md:w-[40px] md:h-[40px] h-[35px] w-[35px] rounded-full bg-white bg-opacity-50 animate-pulse">
+
+        <div className="absolute md:w-[33px] md:h-[33px] h-[30px] w-[30px] animate-pulse bg-myBlue bg-opacity-50 rounded-full"></div>
+      </div>
+
+      {/* Collection Info */}
+      <div className="h-full flex-1 flex flex-col justify-center">
+        <div className="w-3/4 h-6 bg-[white] bg-opacity-50 rounded-md"></div>
+        <div className="w-1/3 h-4 bg-white bg-opacity-30 rounded-md mt-1"></div>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex h-full items-center justify-end gap-4 md:text-2xl text-[20px] w-[auto]">
+        {/* Rename */}
+        <div className="w-[34px] h-[34px] bg-white bg-opacity-50 rounded-md"></div>
+
+        {/* Completed/Uncompleted Button */}
+        <div className="w-[34px] h-[34px] bg-white bg-opacity-50 rounded-md"></div>
+
+        {/* Delete Button */}
+        <div className="relative w-[34px] h-[34px] flex items-center justify-center bg-white bg-opacity-50 rounded-md">
+          {/* <div className="absolute w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> */}
+        </div>
+      </div>
+      
+      {/* Rename Input Field */}
+      {/* <div className="h-[42px] w-full absolute z-30 bg-white bg-opacity-50 shadow-sm gap-3 border top-0 left-0 right-0 flex justify-between items-center">
+        <div className="w-full h-full bg-white bg-opacity-50 rounded-md"></div>
+        <div className="md:h-[36px] h-[32px] md:w-[80px] w-[60px] bg-white bg-opacity-50 rounded-md flex justify-center items-center">
+          <div className="h-[30px] w-[30px] border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      </div> */}
+    </div>
+  );
+};
+

@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate, useLocation, Router } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -11,6 +11,7 @@ import Collection from "./pages/Collection";
 import General from "./pages/General";
 import axios from "axios";
 import Profile from "./pages/Profile";
+import CollectionTodos from "./pages/CollectionTodos";
 
 function App() {
   const [profile, setProfile] = useState([]);
@@ -20,6 +21,13 @@ function App() {
   const [passwordForVerification, setPasswordForVerification] = useState("");
   // collections
   const [collections , setCollections ] =useState([]);
+  // Single Colection
+  const [singleCollection , setSingleCollection] = useState(null)
+  const [singleTodoError , setSingleTodoError]  =useState(false)
+  const [SingleTodoLoading , setSingleTodoLoading] =useState(false)
+  const [createCollectionTodoLoading , setCreateCollectionTodoLoading] = useState(false)
+
+
 
 
 
@@ -27,6 +35,7 @@ function App() {
   const location  = useLocation()
 
   const fetchProfile = async () => {
+
     try {
       const response = await axios.get(
         `https://todo-server-six-ashen.vercel.app/user/profile`,
@@ -90,9 +99,9 @@ function App() {
       setLogOuLoading(false);
     }
   };
-
   // https://todo-server-six-ashen.vercel.app
   const fetchTodos = async () => {
+
     try {
       const response = await axios.get(
         `https://todo-server-six-ashen.vercel.app
@@ -108,12 +117,13 @@ function App() {
   };
 
   const fetchCollections = async ()=>{
-    try {
 
-      const response = await axios.get(`http://localhost:2000/collection/collections`, {withCredentials:true})
+    try {
+      const response = await axios.get(`https://todo-server-six-ashen.vercel.app/collection/collections`, {withCredentials:true})
       const data = await response.data;
-      console.log(data.data);
       setCollections(data.data)
+      // console.log(data.data);
+      
     } catch (error) {
       console.log("Collections Are Not Fetcehd :)" ,error);
       
@@ -121,7 +131,41 @@ function App() {
     }
   }
 
+    const fetchCollectionTodos = async (id) => {
 
+      try {
+        setSingleTodoLoading(true);
+        const response = await axios.get(
+          `https://todo-server-six-ashen.vercel.app/collection/collection/${id}`,
+          { withCredentials: true }
+        );
+        const data = await response.data;
+        console.log(data);
+        setSingleCollection(data.data);
+      } catch (error) {
+        console.log("Collection Todo Not Find :)", error);
+        setSingleTodoError(true);
+      } finally {
+        setSingleTodoLoading(false);
+      }
+    };
+
+
+
+    const fetchCollectionTodo = async(collectionId)=>{
+
+      try {
+        const response = await axios.get(
+          `https://todo-server-six-ashen.vercel.app/collection/collection/${collectionId}`,
+          { withCredentials: true }
+        );
+        const data = await response.data;
+        setSingleCollection(data.data);
+        console.log(data);
+      } catch (error) {
+        console.log("Collection Todo Not Find :)", error);
+      } 
+    }
 
   useEffect(() => {
     fetchProfile();
@@ -137,6 +181,10 @@ function App() {
     fetchTodos();
   }, [todos]);
 
+  useEffect(()=>{
+fetchCollections()
+  } , [collections , collections?.todos])
+
   const token = localStorage.getItem("token");
 
 
@@ -149,13 +197,8 @@ const titles = {
   "/profile" :`${profile?.name}'s Profile | My Todos App`
 }
 
-
 document.title = titles[location.pathname] || "My Todos App"
-
 } , [location.pathname])
-
-
-
 
   return (
     <>
@@ -175,7 +218,16 @@ document.title = titles[location.pathname] || "My Todos App"
           // Collections
           setCollections , 
           collections ,
-          fetchCollections
+          fetchCollections,
+          fetchCollectionTodos,
+          singleCollection,
+          setSingleCollection,
+          singleTodoError ,
+          SingleTodoLoading,
+          fetchCollectionTodo,
+          createCollectionTodoLoading,
+          setCreateCollectionTodoLoading
+
         }}
       >
         <Routes>
@@ -197,7 +249,9 @@ document.title = titles[location.pathname] || "My Todos App"
           <Route path="/register" element={<Register />} />
           <Route path="/select-mode" element={<SelectMode />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path ="/collection/todos/:id"  element={<CollectionTodos/>}/>
           <Route path="*" element={<NotFound />} />
+
         </Routes>
       </AppContextProvider>
       <Toaster />

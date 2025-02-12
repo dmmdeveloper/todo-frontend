@@ -3,6 +3,7 @@ import { useAppContext } from '../context/AppContex'
 import Nav from '../components/Nav'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { formatCreatedAt } from '../utils/ConvertIntoSimpleTime.js'
 
 export default function General() {
 
@@ -231,7 +232,7 @@ const toggleCompleted = async ( id, value)=>{
 </button>
       </div>
       </div>
-      <p className= 'text-[9px] md:text-[11px]  text-myHalfWhite]' >{ formatDate( todo.createdAt)}</p>
+      <p className= 'text-[9px] md:text-[11px]  text-myHalfWhite]' >{formatCreatedAt(todo.createdAt)}</p>
     </li>
 }
 

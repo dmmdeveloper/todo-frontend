@@ -19,6 +19,20 @@ const AppContext = createContext(
     collections : [],
     setCollections : ()=>{},
     fetchCollections : ()=>{},
+    // Single Collection 
+    fetchCollectionTodos : (id)=>{},
+    setSingleCollection : ()=>{}
+,    singleCollection  : null,
+    SingleTodoLoading : false,
+    singleTodoError : false,
+fetchCollectionTodo :  (collectionId) => {},
+
+// create a collection In Todo Loading
+createCollectionTodoLoading : false,
+setCreateCollectionTodoLoading  : ()=>{}
+
+
+    
 
     // setModeLoading : ()=>{}
     

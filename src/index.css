@@ -304,8 +304,26 @@ animation: verifyPassword-Popup .2s linear;
   animation: expand .3s ease-in-out forwards;
 }
 
+
+.collap-input-loading  {
+  animation:  collap-input-loading  3s linear  infinite;
+}
+
+@keyframes collap-input-loading  {
+  0%{
+width:  100%;   
+  }
+  100%{
+    width:  0%;
+  }
+  
+}
+
+
 @keyframes expand {
+
   from {
+
     width: 0%;
   }
   to {
@@ -314,12 +332,15 @@ animation: verifyPassword-Popup .2s linear;
 }
 
 
+
 .show-collection-edit-name{
 animation: show-collection-edit-name .1s linear ;
 }
 
 @keyframes  show-collection-edit-name {
+
   0%{
+
     transform: scaleX(0);
   }
   100%{
@@ -331,3 +352,16 @@ animation: show-collection-edit-name .1s linear ;
 }
 
 
+.select-all-permision-popup {
+  animation: select-all-permision-popup .1s linear;
+}
+
+@keyframes select-all-permision-popup {
+
+  0%{
+    transform:  scale(0);
+  }
+  100%{
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,379 @@
+import React, { useEffect, useState } from "react";
+import Nav from "../components/Nav";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { formatCreatedAt } from "../utils/ConvertIntoSimpleTime";
+import {toast } from "react-hot-toast"
+import { useAppContext } from "../context/AppContex";
+import { motion  , AnimatePresence} from "framer-motion";
+
+export default function CollectionTodos() {
+  const { id } = useParams();
+  const [collection, setCollection] = useState(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const {fetchCollectionTodos, singleTodoError , SingleTodoLoading  , singleCollection } = useAppContext()
+
+  // http://localhost:2000/collection/collection/67a46983ffd1c0fd202d5b1b
+
+
+  const completed = singleCollection?.todos.filter(
+    (todo) => todo.completed === true
+  ).length;
+  const progressPercentage =
+    singleCollection?.todos.length === 0
+      ? 0
+      : (completed / singleCollection?.todos.length) * 100;
+
+  useEffect(() => {
+    if (id) fetchCollectionTodos(id);
+  }, [id]);
+
+  return (
+    <>
+      <div className="min-h-screen h-auto w-full bg-myBlue pb-9">
+        {/* <Nav/> */}
+        {singleTodoError ? (
+
+          <div className="h-screen w-full bg-myBlue flex justify-center items-center text-red-700 text-3xl">
+            {" "}
+            OOPs :) Some Thing Went Wront
+          </div>
+        ) : SingleTodoLoading ? (
+
+          <div className="h-screen w-full bg-myBlue flex justify-center items-center text-white text-3xl">
+            {" "}
+            Loading.......
+          </div>
+        ) : (
+          <>
+            <PieChart
+              name={singleCollection?.name}
+
+              time={formatCreatedAt(singleCollection?.createdAt)}
+              progressPercentage={Math.floor(progressPercentage)}
+              completed={completed}
+              total={singleCollection?.todos.length}
+            />
+            {/* Todos options Select All Delete All */}
+<Options/>
+
+{/* Collection Todo */}
+<CollectionTodo collectionId ={id} collection= {singleCollection} />
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
+function PieChart({ name, time, progressPercentage, completed, total }) {
+
+  return (
+    <>
+      <header>
+        <section className="h-auto pt-5 flex justify-center flex-col items-center">
+          <div className="relative w-40 h-40 flex items-center justify-center">
+            {/* Pie Chart Shape */}
+            <div
+              className="w-full h-full rounded-full"
+              style={{
+                background: `conic-gradient(blue 0% ${progressPercentage}%, #c7c8f0 ${progressPercentage}% 100%)`,
+              }}
+            ></div>
+            {/* Inner Circle for Donut Effect */}
+            <div className="absolute  rounded-full flex  justify-center items-center font-bold">
+              {" "}
+              {completed}/{total}
+            </div>
+          </div>
+          <div className="">
+            <input
+              value={name}
+              readOnly
+              className="text-3xl font-bold bg-transparent outline-none border-none text-center"
+            />
+            <p className="text-end text-myHalfWhite text-[15px]">{time}</p>
+          </div>
+        </section>
+      </header>
+    </>
+  );
+}
+
+function Options() {
+
+
+  return(<>
+<div className="h-[40px] md:w-[40%] w-[90%] mt-2 mx-auto flex justify-between items-center p-3 ">
+  {/*  Select All */}
+  <div className="">
+    <input type="checkbox" className="scale-[2]" />
+  </div>
+
+  
+<select className="bg-transparent border rounded-sm" name="" id="">
+  <option className="text-myBlue" value="">New To Old</option>
+  <option className="text-myBlue" value="">Old To New </option>
+</select>
+
+
+
+  </div>  
+  
+  </>)
+  
+}
+
+function CollectionTodo({collectionId  ,collection} ){
+
+const { singleCollection ,createCollectionTodoLoading } = useAppContext();
+const [showEditInput , setShowEditInput] = useState(null);
+
+  return(<>
+  <div className="md:w-[50%] mx-auto w-full  mt-3">
+    <TodoForm  id={collectionId}/>
+{/* When Create a new Todo then it's Sketon shows */}
+{
+  createCollectionTodoLoading && (<>
+ <div  className="w-[80%]  mx-auto relative h-[40px] flex items-center gap-2 mt-3">
+
+<div className="h-[30px] w-[30px] bg-myHalfWhite animate-pulse rounded-md"></div>
+
+<div className=" flex-1 w-full">
+
+  <h2 className="h-[20px] w-[80%] bg-myHalfWhite rounded-md animate-pulse" ></h2>
+  <p className="h-[10px] w-[130px] animate-pulse bg-myHalfWhite mt-1 rounded-md" ></p>
+</div>
+
+<div className=" flex gap-5">
+
+<button className="h-[25px] w-[25px] bg-myHalfWhite rounded-md animate-pulse" ></button>
+<button className="h-[25px] w-[25px] bg-myHalfWhite rounded-md animate-pulse" ></button>
+</div>
+ </div>  
+  </>)
+}
+    <AnimatePresence>
+{
+  singleCollection?.todos.map((todo , index)=>{
+    return(<>
+    <TodoItem time = {todo?.createdAt} collectionId ={collectionId} text={todo.text} _id ={todo?._id} completed={todo?.completed} index={index} showEditInput ={showEditInput} setShowEditInput = {setShowEditInput} />
+    
+    </>)
+  })
+}
+</AnimatePresence>
+  </div>
+  </>) 
+}
+
+function TodoForm({id}) {
+
+
+const [text ,setText] = useState("");
+const [loading , setLoading] =useState(false);
+const { fetchCollectionTodo , setCreateCollectionTodoLoading}=  useAppContext();
+
+const handleSubmit = async  (e)=>{
+  e.preventDefault()
+  try {
+    setLoading(true)
+    setCreateCollectionTodoLoading(true)
+    const response = await axios.post(`https://todo-server-six-ashen.vercel.app/collection/todo/create/${id}` , { text} , {
+      withCredentials:true,
+      headers:{
+        "Content-Type":"application/json" 
+      }
+    })
+    const data = await response.data;
+    console.log(data);
+    if(data) 
+      {
+        await fetchCollectionTodo(id)
+        setText("");   
+        };
+
+    
+  } catch (error) {
+    toast.error("Todo Not Created :) \n Some thing Went Wrong")
+    
+    console.log("Todo In Collection Not Created :))", error);
+    
+  }finally{setLoading(false) ; setCreateCollectionTodoLoading(false)}
+}
+
+  return(<>
+<form onSubmit={handleSubmit} className="w-[80%] mx-auto border h-[40px] flex gap-3 items-center">
+  <input
+  value={text}
+  onChange={(e)=>setText(e.target.value)}
+  required
+    type="text"
+    className="bg-transparent outline-none border-none placeholder:text-myHalfWhite  flex-grow h-full px-2"
+    placeholder="Add Todo"
+  />
+  <button type="submit" className="h-[34px] text-2xl flex justify-center items-center w-[100px] bg-white text-myBlue mr-1">
+{
+  loading ?
+  <span className="h-[30px] w-[30px] rounded-full border-myBlue animate-spin border-t-transparent border-[2px]"></span>:
+  " Add" 
+
+}
+
+
+    </button>
+
+ 
+</form>
+
+  </>)
+  
+};
+
+function TodoItem({  text ,index , _id , showEditInput , setShowEditInput , completed , collectionId ,time}) {
+
+const {fetchCollectionTodo } = useAppContext();
+const [newText ,setText] =useState(text)
+const [deleteLoading , setDeleteLoading] = useState(false)
+const [updateTextLoading  ,setUpdateTextLoading] =useState(false) 
+
+  const deleteTodo = async ()=>{
+    try {
+      setDeleteLoading(true)
+      // http://localhost:2000/collection/todo/67a4a0e0f93a3aecec68849e/delete/67a702c7b698fe314d63bdf5
+      const response = await axios.delete(`https://todo-server-six-ashen.vercel.app/collection/todo/${collectionId}/delete/${_id}` , {withCredentials:true}) 
+      const data =await response.data;
+      console.log(data);
+      if(data) fetchCollectionTodo(collectionId)
+    } catch (error) {
+      console.log("Todo In Collection Not Deleted :)" , error);
+      
+    }finally{ setDeleteLoading(false)}
+  }
+
+  const todocompeleted = async()=>{
+    try {
+      // http://localhost:2000/collection/todo/67ab0c82631806baa20b7a00/update/67ab0cb5631806baa20b7c69
+      const response = await  axios.put(`https://todo-server-six-ashen.vercel.app/collection/todo/${collectionId}/update/${_id}` , { 
+        completed  : completed === true ? false :true
+      },
+  
+      {
+        withCredentials :true,
+        headers:{
+          "Content-Type":"application/json"
+        }
+      } 
+
+    )
+    const data = await response.data;
+    console.log(data);
+      
+    if(data) fetchCollectionTodo(collectionId)
+    } catch (error) {
+      console.log("Collection Todo Not Completed :)", error);
+      
+      
+    }
+  }
+
+  const updateText = async(e)=>{
+
+
+    e.preventDefault();
+    try {
+      setUpdateTextLoading(true)
+      const response = await axios.put(`https://todo-server-six-ashen.vercel.app/collection/todo/${collectionId}/update/${_id}` , {
+        text :newText
+      } ,
+      {
+        withCredentials:true,
+        headers:{
+          "Content-Type":"application/json"
+        }
+      } 
+     )
+      
+     const data = await response.data;
+     console.log(data);
+     if(data){
+      await fetchCollectionTodo(collectionId)
+      setShowEditInput(false);
+     }
+     
+    } catch (error) {
+      console.log("Todo  Text Not Updated :)" , error);
+      
+    }finally{ setUpdateTextLoading(false)}
+  }
+
+  return (<>
+<motion.div initial={{ opacity: 0, x: index %2 === 0 ? -20 : 20 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 0.5 }}
+             className="w-[80%] mx-auto relative h-[40px] flex items-center gap-3 mt-3">
+  {/* Check box */}
+  <div  className="h-[30px] w-[30px] flex justify-center items-center">
+    <input onClick={todocompeleted} checked={completed} type="checkbox" className="scale-[2] cursor-pointer" />
+  </div>
+
+  {/* Todo Text and date (Expands dynamically) */}
+  <div className="flex-1 min-w-0 ">
+
+    <input
+      readOnly
+      value={text}
+      type="text"
+      className={`bg-transparent ${completed ? "text-myHalfWhite":""} outline-none border-none text-2xl w-full truncate relative top-2`}
+    />
+    <br />
+    <time className="text-[13px] text-[#ffffffc8]">{formatCreatedAt(time)}</time>
+  </div>
+
+  {/* Delete and rename buttons (At the end) */}
+  <div className="flex gap-5">
+    <button onClick={()=>setShowEditInput(_id)} className="text-xl" >
+      
+      <i className="fa-solid fa-pen"></i>
+    </button>
+    <button onClick={deleteTodo} className="text-xl" > 
+      {
+        deleteLoading ? 
+      <div className="h-[20px] w-[20px] border-[2px] rounded-full animate-spin border-t-transparent"></div>
+:
+<i className="fa-solid fa-trash"></i>
+
+      }
+    </button>
+  </div>
+  
+{/* Edit Name Div / Input */}
+{
+showEditInput  === _id && (<>
+<form
+onSubmit={updateText}
+className="h-[45px] show-collection-edit-name w-full origin-left absolute top-0 border bg-myBlue items-center flex gap-3">
+
+  <input type="text" value={newText} onChange={(e)=>setText(e.target.value)} className="flex-1 text-xl w-full bg-transparent h-full border-none outline-none p-1" />
+  <button type="submit" className="w-[70px] hover:opacity-90 bg-white text-myBlue h-[90%] mr-1 text-xl flex justify-center items-center" > 
+    {
+      updateTextLoading ?
+      <div className="h-[30px] w-[30px] border-[2px] border-myBlue rounded-full border-t-transparent animate-spin"></div>
+      :
+
+    "Save"
+    }
+
+    
+    </button>
+
+</form>
+</>)
+}
+
+
+</motion.div>
+  </>)
+  
+} 
