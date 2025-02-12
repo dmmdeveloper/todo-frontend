@@ -150,6 +150,7 @@ if(data){
 
 
 function CollectionItem({ name, id, time, todos   ,nameEditongId , setNameEditingId }) {
+
   const { fetchCollections } = useAppContext();
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [actionType, setActionType] = useState(""); // Track which action (Select/Unselect)
@@ -245,19 +246,21 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
         {/* Progress Circle */}
         <div 
 
-          className="relative flex items-center justify-center md:w-[40px] md:h-[40px] h-[35px] w-[35px] rounded-full"
+
+          className="relative flex items-center justify-center md:w-[40px] md:h-[40px] h-[32px] w-[32px] rounded-full"
           style={{
             background: `conic-gradient(#00000087 ${progressPercentage}% 0%, #FFFFFF ${progressPercentage}% 100%)`
           }}
         >
-          <div className="absolute md:w-[33px] md:h-[33px] h-[30px] w-[30px] bg-myBlue text-black rounded-full"></div>
-          <span className="absolute md:text-[12px] font-bold text-[12px] text-white">
+          <div className="absolute md:w-[33px] md:h-[33px] h-[28px] w-[28px] bg-myBlue text-black rounded-full"></div>
+          <span className="absolute md:text-[12px] font-bold text-[11px] text-white">
             {completed}/{todos.length}
           </span>
         </div>
 
         {/* Collection Info */}
         <div className="h-full flex-1 flex flex-col justify-center">
+
 <Link to={`/collection/todos/${id}`} className="cursor-pointer" >
           <input
             type="text"
@@ -266,16 +269,14 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
             ${todos.length > 0 && completed !== 0 ? (todos.length === completed ? 'opacity-50' : '') : ''}`}
             readOnly
           />
-          <time className="md:text-[12px] text-[10px] text-[#ffffffb2] relative md:bottom-[7px]">
+          <time className="md:text-[12px] text-[10px] text-[#ffffffb2] relative bottom-[6px]">
             {formatCreatedAt(time)}
           </time>
           </Link>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex h-full items-center justify-end md:gap-4 gap-2 md:text-2xl text-[18px] w-[auto]">
-
-          
+        <div className="flex h-full items-center justify-end md:gap-4 gap-3 md:text-2xl text-[18px] w-[auto]">
           {/* Rename */}
           <button onClick={() => setNameEditingId(id)} className="hover:opacity-80">
             <i className="fa-solid fa-pen"></i>
@@ -306,7 +307,7 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
           {/* Delete */}
           <button 
   onClick={deleteTodo} 
-  className="relative w-[40px] h-[40px] flex items-center justify-center   bg-opacity-20"
+  className="relative flex items-center justify-center   bg-opacity-20"
   disabled={loadingDelete}
 >
   {loadingDelete ? (
@@ -319,12 +320,12 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
 
         {/* Rename Input Field */}
         {nameEditongId === id &&  (        
-          <form className="md:h-[42px] h-[30px]  w-full absolute z-30 bg-myBlue shadow-sm md:gap-3 gap-1 border top-0 left-0 right-0 flex justify-between items-center show-collection-edit-name">
+          <form className="md:h-[42px]  w-full absolute z-30 bg-myBlue shadow-sm md:gap-3 gap-1 border top-0 left-0 right-0 flex justify-between items-center show-collection-edit-name">
 
             <input value={newName} onChange={(e)=>setNewName(e.target.value)} className="bg-transparent p-1 md:flex-1 w-[80%] h-full outline-none border-none  md:text-xl text-[17px]" type="text" />
             <button
             type="submit"
-              className="md:h-[36px] h-[32px] md:w-[80px] w-[60px] bg-white text-myBlue mr-[2px] text-xl hover:opacity-90 cursor-pointer flex justify-center items-center"
+              className="md:h-[36px md:w-[80px] w-[60px] bg-white text-myBlue mr-[2px] text-xl hover:opacity-90 cursor-pointer flex justify-center items-center"
               onClick={editName}
             >
               {
