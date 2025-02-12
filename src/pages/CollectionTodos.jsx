@@ -95,7 +95,7 @@ function PieChart({ name, time, progressPercentage, completed, total }) {
             <input
               value={name}
               readOnly
-              className="md:text-3xl w-[70%] md:w-[90%] text-2xl mx-auto font-bold bg-transparent outline-none border-none text-center"
+              className="md:text-3xl w-[90%] md:w-[90%] text-2xl mx-auto font-bold bg-transparent outline-none border-none text-center"
             />
             <p className="text-end mx-auto md:w-[50%] w-[80%] text-myHalfWhite text-[15px]">{time}</p>
           </div>
