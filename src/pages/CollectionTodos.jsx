@@ -76,7 +76,7 @@ function PieChart({ name, time, progressPercentage, completed, total }) {
     <>
       <header>
         <section className="h-auto md:pt-5 pt-3 flex justify-center flex-col items-center">
-          <div className="relative md:w-40 md:h-40 h-30px w-30px  flex items-center justify-center">
+          <div className="relative md:w-40 md:h-40 h-30 w-30  flex items-center justify-center">
             {/* Pie Chart Shape */}
             <div
               className="w-full h-full rounded-full"
@@ -94,7 +94,7 @@ function PieChart({ name, time, progressPercentage, completed, total }) {
             <input
               value={name}
               readOnly
-              className="md:text-3xl w-[50%] text-2xl mx-auto font-bold bg-transparent outline-none border-none text-center"
+              className="md:text-3xl md:w-[50%] w-[70%] text-2xl mx-auto font-bold bg-transparent outline-none border-none text-center"
             />
             <p className="text-end mx-auto md:w-[50%] w-[80%] text-myHalfWhite text-[15px]">{time}</p>
           </div>
@@ -215,7 +215,7 @@ const handleSubmit = async  (e)=>{
     className="bg-transparent outline-none border-none placeholder:text-myHalfWhite  md:flex-grow w-[80%] h-full px-2"
     placeholder="Add Todo"
   />
-  <button type="submit" className="md:h-[34px] h-[26px] md:text-2xl text-[20px] flex justify-center items-center md:w-[100px] w-[70px] bg-white text-myBlue mr-1">
+  <button type="submit" className="md:h-[34px] h-[26px] md:text-2xl text-[20px] flex justify-center items-center md:w-[100px] w-[70px] bg-white text-myBlue  mr-[2px] md:mr-1">
 {
   loading ?
   <span className="md:h-[30px] md:w-[30px]  h-[25px] w-[25px] rounded-full border-myBlue animate-spin border-t-transparent border-[2px]"></span>:
@@ -234,7 +234,6 @@ const handleSubmit = async  (e)=>{
 };
 
 function TodoItem({  text ,index , _id , showEditInput , setShowEditInput , completed , collectionId ,time}) {
-
 const {fetchCollectionTodo } = useAppContext();
 const [newText ,setText] =useState(text)
 const [deleteLoading , setDeleteLoading] = useState(false)
@@ -314,32 +313,33 @@ const [updateTextLoading  ,setUpdateTextLoading] =useState(false)
 <motion.div initial={{ opacity: 0, x: index %2 === 0 ? -20 : 20 }} 
             animate={{ opacity: 1, x: 0 }} 
             transition={{ duration: 0.5 }}
-             className="w-[80%] mx-auto relative h-[40px] flex items-center gap-3 mt-3">
+             className="md:w-[80%] w-[95%] mx-auto relative md:h-[40px] h-[35px]  flex items-center md:gap-3 gap-1 mt-2 md:mt-3">
   {/* Check box */}
-  <div  className="h-[30px] w-[30px] flex justify-center items-center">
-    <input onClick={todocompeleted} checked={completed} type="checkbox" className="scale-[2] cursor-pointer" />
+
+  <div  className="md:h-[30px] h-[25px]  md:w-[30px] w-[25px] flex justify-center items-center">
+    <input onClick={todocompeleted} checked={completed} type="checkbox" className="md:scale-[2] scale-[1.5] cursor-pointer" />
   </div>
 
   {/* Todo Text and date (Expands dynamically) */}
   <div className="flex-1 min-w-0 ">
-
     <input
       readOnly
       value={text}
       type="text"
-      className={`bg-transparent ${completed ? "text-myHalfWhite":""} outline-none border-none text-2xl w-full truncate relative top-2`}
+      className={`bg-transparent ${completed ? "text-myHalfWhite":""} outline-none border-none md:text-2xl text-[20px] w-full truncate relative top-2`}
     />
     <br />
     <time className="text-[13px] text-[#ffffffc8]">{formatCreatedAt(time)}</time>
   </div>
 
   {/* Delete and rename buttons (At the end) */}
-  <div className="flex gap-5">
-    <button onClick={()=>setShowEditInput(_id)} className="text-xl" >
+  <div className="flex md:gap-5 gap-3">
+
+    <button onClick={()=>setShowEditInput(_id)} className="md:text-xl text-[17px]" >
       
       <i className="fa-solid fa-pen"></i>
     </button>
-    <button onClick={deleteTodo} className="text-xl" > 
+    <button onClick={deleteTodo} className="md:text-xl text-[17px]" > 
       {
         deleteLoading ? 
       <div className="h-[20px] w-[20px] border-[2px] rounded-full animate-spin border-t-transparent"></div>
@@ -355,10 +355,10 @@ const [updateTextLoading  ,setUpdateTextLoading] =useState(false)
 showEditInput  === _id && (<>
 <form
 onSubmit={updateText}
-className="h-[45px] show-collection-edit-name w-full origin-left absolute top-0 border bg-myBlue items-center flex gap-3">
+className="md:h-[45px] h-[37px] show-collection-edit-name w-full origin-left absolute top-0 border bg-myBlue items-center flex gap-3">
 
   <input type="text" value={newText} onChange={(e)=>setText(e.target.value)} className="flex-1 text-xl w-full bg-transparent h-full border-none outline-none p-1" />
-  <button type="submit" className="w-[70px] hover:opacity-90 bg-white text-myBlue h-[90%] mr-1 text-xl flex justify-center items-center" > 
+  <button type="submit" className="md:w-[70px] w-[60px] hover:opacity-90 bg-white text-myBlue h-[90%] mr-1 text-xl flex justify-center items-center" > 
     {
       updateTextLoading ?
       <div className="h-[30px] w-[30px] border-[2px] border-myBlue rounded-full border-t-transparent animate-spin"></div>
