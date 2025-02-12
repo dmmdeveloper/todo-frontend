@@ -59,7 +59,7 @@ export default function CollectionTodos() {
               total={singleCollection?.todos.length}
             />
             {/* Todos options Select All Delete All */}
-<Options/>
+{/* <Options/> */}
 
 {/* Collection Todo */}
 <CollectionTodo collectionId ={id} collection= {singleCollection} />
@@ -76,7 +76,7 @@ function PieChart({ name, time, progressPercentage, completed, total }) {
     <>
       <header>
         <section className="h-auto md:pt-5 pt-3 flex justify-center flex-col items-center">
-          <div className="relative md:w-40 md:h-40 h-[30px] w-[30px]  flex items-center justify-center">
+          <div className="relative md:w-40 md:h-40 h-30px w-30px  flex items-center justify-center">
             {/* Pie Chart Shape */}
             <div
               className="w-full h-full rounded-full"
@@ -94,9 +94,9 @@ function PieChart({ name, time, progressPercentage, completed, total }) {
             <input
               value={name}
               readOnly
-              className="md:text-3xl w-[50%] text-2xl font-bold bg-transparent outline-none border-none text-center"
+              className="md:text-3xl w-[50%] text-2xl mx-auto font-bold bg-transparent outline-none border-none text-center"
             />
-            <p className="md:text-end text-center text-myHalfWhite text-[15px]">{time}</p>
+            <p className="text-end mx-auto md:w-[50%] w-[80%] text-myHalfWhite text-[15px]">{time}</p>
           </div>
         </section>
       </header>
@@ -173,7 +173,6 @@ const [showEditInput , setShowEditInput] = useState(null);
 
 function TodoForm({id}) {
 
-
 const [text ,setText] = useState("");
 const [loading , setLoading] =useState(false);
 const { fetchCollectionTodo , setCreateCollectionTodoLoading}=  useAppContext();
@@ -196,7 +195,6 @@ const handleSubmit = async  (e)=>{
         await fetchCollectionTodo(id)
         setText("");   
         };
-
     
   } catch (error) {
     toast.error("Todo Not Created :) \n Some thing Went Wrong")
@@ -207,19 +205,20 @@ const handleSubmit = async  (e)=>{
 }
 
   return(<>
-<form onSubmit={handleSubmit} className="w-[80%] mx-auto border h-[40px] flex gap-3 items-center">
+<form onSubmit={handleSubmit} className="md:w-[80%] w-[90%] mx-auto border md:h-[40px] h-[30px] flex md:gap-3 gap-2 items-center">
+
   <input
   value={text}
   onChange={(e)=>setText(e.target.value)}
   required
     type="text"
-    className="bg-transparent outline-none border-none placeholder:text-myHalfWhite  flex-grow h-full px-2"
+    className="bg-transparent outline-none border-none placeholder:text-myHalfWhite  md:flex-grow w-[80%] h-full px-2"
     placeholder="Add Todo"
   />
-  <button type="submit" className="h-[34px] text-2xl flex justify-center items-center w-[100px] bg-white text-myBlue mr-1">
+  <button type="submit" className="md:h-[34px] h-[26px] md:text-2xl text-[20px] flex justify-center items-center md:w-[100px] w-[70px] bg-white text-myBlue mr-1">
 {
   loading ?
-  <span className="h-[30px] w-[30px] rounded-full border-myBlue animate-spin border-t-transparent border-[2px]"></span>:
+  <span className="md:h-[30px] md:w-[30px]  h-[25px] w-[25px] rounded-full border-myBlue animate-spin border-t-transparent border-[2px]"></span>:
   " Add" 
 
 }
