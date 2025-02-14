@@ -162,17 +162,15 @@ if(data){
   );
 }
 
-
 function CollectionItem({ name, id, time, todos   ,nameEditongId , setNameEditingId }) {
-
-
   const { fetchCollections } = useAppContext();
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [actionType, setActionType] = useState(""); // Track which action (Select/Unselect)
 const [loading  , setLoading] = useState(false);
 const [loadingDelete ,setLoadingDelete]  =useState(false)
 const [newName , setNewName] = useState(name);
-const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
+const [newNameSavedLoading , setNewNameSavedLoading] = useState(false);
+const [isDelete , setIsDelete] = useState(false);
 
   const completed = todos.filter((todo) => todo.completed === true).length;
   const progressPercentage = todos.length === 0 ? 0 : (completed / todos.length) * 100;
@@ -199,6 +197,7 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
     }
   };
   const deleteTodo = async ()=>{
+
     try {
       setLoadingDelete(true)
       const response = await axios.delete(
@@ -207,6 +206,11 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
          , { withCredentials : true})
       const data = await response.data;
       console.log(data);
+      if(data) {
+        setIsDelete(false)
+      
+        fetchCollections()
+      }
 
     } catch (error) {
       console.log("Todo Not Deleted :)", error); 
@@ -274,7 +278,6 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
 
         {/* Collection Info */}
         <div className="h-full flex-1 flex flex-col justify-center">
-
 <Link to={`/collection/todos/${id}`} className="cursor-pointer" >
           <input
             type="text"
@@ -298,7 +301,6 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
 
           {/* Completed/Uncompleted with Pop-up Confirmation */}
           <button
-
             title={
               todos.length === 0
                 ? "Create todos"
@@ -320,15 +322,12 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
           </button>
           {/* Delete */}
           <button 
-  onClick={deleteTodo} 
+  onClick={()=>setIsDelete(true)} 
   className="relative flex items-center justify-center h-5 w-5 bg-opacity-20"
   disabled={loadingDelete}
 >
-  {loadingDelete ? (
-    <div className="absolute w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-  ) : (
-    <i className="fa-solid fa-trash text-white hover:opacity-80"></i>
-  )}
+<i className="fa-solid fa-trash text-white hover:opacity-80"></i>
+
 </button>
         </div>
 
@@ -356,9 +355,9 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
         )}
       </div>
       {/* Custom Confirmation Modal */}
-      {showConfirmPopup && (
 
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
+      {showConfirmPopup && (
+        <div style={{backdropFilter : "blur(5px)"}} className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
 
           <div className="bg-myBlue select-all-permision-popup border-[2px] rounded-lg p-5 w-[300px] text-center shadow-lg">
             <p className="text-lg font-semibold">
@@ -389,6 +388,46 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
           </div>
         </div>
       )}
+
+{/* Confirm Delete popup */}
+{
+  isDelete  && (
+
+<div style={{backdropFilter : "blur(5px)"}} className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
+
+
+<div className="bg-myBlue select-all-permision-popup border-[2px] rounded-lg p-5 w-[300px] text-center shadow-lg">
+  <p className="text-[14px] font-semibold">
+    Are You Sure For Deleting a Collection?
+  </p>
+  <div className="flex justify-around mt-4">
+    <button
+      className="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded"
+      disabled={loading}
+      onClick={()=>setIsDelete(false)}
+    >
+      Cancel
+    </button>
+    <button
+    onClick={deleteTodo}
+      className={`px-4 py-2 rounded flex items-center justify-center bg-red-600 ${
+        loadingDelete ? "bg-blue-300 cursor-not-allowed" : " hover:opacity-80 text-white"
+      }`}
+      disabled={loading}
+    >
+      {loadingDelete ? (
+        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+      ) : (
+        "Yes"
+      )}
+    </button>
+  </div>
+</div>
+</div>
+  )
+}
+
+
     </>
   );
 }
