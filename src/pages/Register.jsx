@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from "axios"
 import toast from 'react-hot-toast'
+import origin from '../config'
 
 export default function Register() {
 
@@ -36,7 +37,7 @@ const handleSubmit = async(e)=>{
 try {
   setLoading(true)
 const respose  =  await axios.post(
-  `https://todo-server-six-ashen.vercel.app/user/register`
+  `${origin}/user/register`
   // `http://localhost:2000/user/register`
 
    , formToSend , {

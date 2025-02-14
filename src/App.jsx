@@ -12,6 +12,7 @@ import General from "./pages/General";
 import axios from "axios";
 import Profile from "./pages/Profile";
 import CollectionTodos from "./pages/CollectionTodos";
+import origin from "./config";
 
 function App() {
   const [profile, setProfile] = useState([]);
@@ -27,10 +28,6 @@ function App() {
   const [SingleTodoLoading , setSingleTodoLoading] =useState(false)
   const [createCollectionTodoLoading , setCreateCollectionTodoLoading] = useState(false)
 
-
-
-
-
   const navigate = useNavigate(null);
   const location  = useLocation()
 
@@ -38,7 +35,7 @@ function App() {
 
     try {
       const response = await axios.get(
-        `https://todo-server-six-ashen.vercel.app/user/profile`,
+        `${origin}/user/profile`,
         // `http://localhost:2000/user/profile`,
 
         { withCredentials: true }
@@ -51,10 +48,11 @@ function App() {
     }
   };
   const changeMode = async (mode = "general") => {
+
     try {
       setModeLoading(true);
       const response = await axios.post(
-        `https://todo-server-six-ashen.vercel.app/user/mode`,
+        `${origin}/user/mode`,
         { mode },
         {
           withCredentials: true,
@@ -79,7 +77,7 @@ function App() {
     try {
       setLogOuLoading(true);
       const response = await axios.get(
-        `https://todo-server-six-ashen.vercel.app/user/logout`,
+        `${origin}/user/logout`,
         // `http://localhost:2000/user/logout`
 
         { withCredentials: true }
@@ -101,11 +99,9 @@ function App() {
   };
   // https://todo-server-six-ashen.vercel.app
   const fetchTodos = async () => {
-
     try {
       const response = await axios.get(
-        `https://todo-server-six-ashen.vercel.app
-/todo/todos`,
+        `${origin}/todo/todos`,
         { withCredentials: true }
       );
       const data = await response.data;
@@ -117,9 +113,8 @@ function App() {
   };
 
   const fetchCollections = async ()=>{
-
     try {
-      const response = await axios.get(`https://todo-server-six-ashen.vercel.app/collection/collections`, {withCredentials:true})
+      const response = await axios.get(`${origin}/collection/collections`, {withCredentials:true})
       const data = await response.data;
       setCollections(data.data)
       // console.log(data.data);
@@ -132,11 +127,10 @@ function App() {
   }
 
     const fetchCollectionTodos = async (id) => {
-
       try {
         setSingleTodoLoading(true);
         const response = await axios.get(
-          `https://todo-server-six-ashen.vercel.app/collection/collection/${id}`,
+          ` ${origin}/collection/collection/${id}`,
           { withCredentials: true }
         );
         const data = await response.data;
@@ -149,14 +143,11 @@ function App() {
         setSingleTodoLoading(false);
       }
     };
-
-
-
     const fetchCollectionTodo = async(collectionId)=>{
 
       try {
         const response = await axios.get(
-          `https://todo-server-six-ashen.vercel.app/collection/collection/${collectionId}`,
+          `${origin}/collection/collection/${collectionId}`,
           { withCredentials: true }
         );
         const data = await response.data;

@@ -3,12 +3,11 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import {  Link, useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContex'
+import origin from '../config'
 
 export default function Login() {
 const {setProfile} = useAppContext();
 const navigate = useNavigate(null)
-
-
 const [isFocus,setIsFocus] = useState(false)
 
 const [showPassword ,setShowPassword] = useState(false)
@@ -37,7 +36,7 @@ dataSendTo.append("email", formData.email)
 dataSendTo.append("password" , formData.password);
 
 const response = await axios.post(
-  `https://todo-server-six-ashen.vercel.app/user/login`
+  `${origin}/user/login`
     // `http://localhost:2000/user/login`
 
 , dataSendTo , {

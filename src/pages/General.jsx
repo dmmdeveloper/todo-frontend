@@ -4,8 +4,10 @@ import Nav from '../components/Nav'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { formatCreatedAt } from '../utils/ConvertIntoSimpleTime.js'
+import origin from '../config/index.js'
 
 export default function General() {
+
 
 
  const { profile , todos }  =  useAppContext()
@@ -70,6 +72,7 @@ Happy Todos Journey!
 function TodoForm() {
 
 
+
 const [text , setText] = useState("");
 const [loading , setLoading] = useState(false)
 
@@ -77,7 +80,7 @@ const handleSubmit = async( e)=>{
 e.preventDefault();  
 try {
   setLoading(true)
-const response = await axios.post(`https://todo-server-six-ashen.vercel.app/todo/create` , { text} , { withCredentials:true ,
+const response = await axios.post(`${origin}/todo/create` , { text} , { withCredentials:true ,
   headers:{
     "Content-Type":"application/json"
   }
@@ -119,7 +122,7 @@ const [text,setText] = useState(todo.text)
     // https://todo-server-six-ashen.vercel.app
     try {
       setLoading(true)
-      const response  =await axios.delete(`https://todo-server-six-ashen.vercel.app/todo/delete/${id}` , { withCredentials:true} )
+      const response  =await axios.delete(`${origin}/todo/delete/${id}` , { withCredentials:true} )
       const data = await response.data;
       console.log(data);
     } catch (error) {
@@ -134,7 +137,7 @@ const updateText = async(e)=>{
   e.preventDefault()
   try {
     setUpdateLoading(true)
-    const response = await axios.post(`https://todo-server-six-ashen.vercel.app/todo/update/${todo._id}` ,{ text}  , {
+    const response = await axios.post(`${origin}/todo/update/${todo._id}` ,{ text}  , {
 
       withCredentials : true,
       headers:{
@@ -154,7 +157,7 @@ const toggleCompleted = async ( id, value)=>{
 
 
   try {
-    const response = await axios.post(`https://todo-server-six-ashen.vercel.app/todo/update/${id}` ,{  completed : !value} , {
+    const response = await axios.post(`${origin}/todo/update/${id}` ,{  completed : !value} , {
       withCredentials : true,
       headers:{
         "Content-Type":"application/json"
@@ -166,16 +169,6 @@ const toggleCompleted = async ( id, value)=>{
 
   }
 }
-  const formatDate = (timestamp) => {
-    const date = new Date(timestamp);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >=12 ? 'PM' : 'AM';
-    const formattedHours = hours % 12 || 12; // Convert 24-hour to 12-hour format
-    const formattedMinutes = minutes.toString().padStart(2, '0'); // Ensure 2 digits for minutes
-    const formattedDate = date.toLocaleDateString(); // Format as MM/DD/YYYY
-    return `${formattedHours}:${formattedMinutes} ${ampm} | ${formattedDate}`;
-  };
 
   return(<>
   <ul className='mt-5' >

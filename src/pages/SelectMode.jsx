@@ -8,29 +8,6 @@ export default function SelectMode() {
 const [loading , setLoading] = useState(false);
 const { changeMode , modeLoading } = useAppContext()
 
-// const chanageMode =async (mode ="general")=>{
-
-// try {
-//   setLoading(true)
-// const response = await axios.post(`http://localhost:2000/user/mode`  , { mode} , {
-//   withCredentials :true ,
-//   headers :{
-//     "Content-Type" :"application/json"
-//   }
-// })
-
-// const data = await response.data;
-// console.log(data);
-
-// if( data ){
-//   localStorage.setItem("mode" , mode)
-// }
-// } catch (error) {
-//   console.log("Mode not Changed"  , error);
-// }finally{
-//   setLoading(false)
-// }
-//   }
 
   return (
 <div className="min-h-screen h-auto w-full bg-myBlue ">

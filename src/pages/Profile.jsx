@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import bcryptjs from "bcryptjs";
 import "@fortawesome/fontawesome-free/css/all.css";
 import axios from 'axios';
+import origin from '../config';
 
 export default function Profile() {
 
@@ -119,8 +120,6 @@ const remainingTodos = todos.filter( (t)=> t.completed === false ).length;
 }
 
 function EditProfile({ showEdit, setShowEdit }) {
-
-
 const { profile , passwordForVerification , fetchProfile } = useAppContext();
 
 const [editname, setEditName] = useState(false);
@@ -165,7 +164,7 @@ if(newProfile) {
 }
 try {
 setSubmitLoading(true)
-const {data} = await axios.post(`https://todo-server-six-ashen.vercel.app/user/update`, formData , {
+const {data} = await axios.post(`${origin}/user/update`, formData , {
   withCredentials:true,
   headers:{
     "Content-Type":"multipart/form-data"
@@ -253,9 +252,7 @@ finally{setSubmitLoading(false)}
   );
 }
 
-
 function EditEmailAndPassword({email , setEmail , password , setPassword}) {
-
 const {profile ,passwordForVerification , setPasswordForVerification } =useAppContext()
 
 const [showEditEmailPassword , setShowEditEmailPassword] = useState(false)
@@ -265,7 +262,6 @@ const [isPasswordCorrect , setIsPasswordCorrect]= useState(false)
 const [editEmail , setEditEmail] = useState(false)
 const [editPassword ,setEditPassword ] = useState(false) 
 const [passwordError , setPasswordError] =useState(false)
-
 
 const verifyPassword = async (e)=>{
 

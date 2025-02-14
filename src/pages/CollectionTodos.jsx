@@ -6,6 +6,7 @@ import { formatCreatedAt } from "../utils/ConvertIntoSimpleTime";
 import {toast } from "react-hot-toast"
 import { useAppContext } from "../context/AppContex";
 import { motion  , AnimatePresence} from "framer-motion";
+import origin from "../config";
 
 export default function CollectionTodos() {
 
@@ -14,9 +15,6 @@ export default function CollectionTodos() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const {fetchCollectionTodos, singleTodoError , SingleTodoLoading  , singleCollection } = useAppContext()
-
-  // http://localhost:2000/collection/collection/67a46983ffd1c0fd202d5b1b
-
 
   const completed = singleCollection?.todos.filter(
     (todo) => todo.completed === true
@@ -39,7 +37,7 @@ export default function CollectionTodos() {
 
           <div className="h-screen w-full bg-myBlue flex justify-start items-center flex-col">
             {" "}
-            OOPs :) Some Thing Went Wront
+            OOPs :) Some Thing Went Wront ~
           </div>
         ) : SingleTodoLoading ? (
 
@@ -71,6 +69,7 @@ export default function CollectionTodos() {
 
 function PieChart({ name, time, progressPercentage, completed, total }) {
 
+
   return (
     <>
       <header>
@@ -78,6 +77,7 @@ function PieChart({ name, time, progressPercentage, completed, total }) {
 
 
           <div className="relative md:w-40  md:h-40 h-32 w-32  flex items-center justify-center">
+
             {/* Pie Chart Shape */}
             <div
               className="w-full h-full rounded-full"
@@ -129,8 +129,8 @@ function Options() {
   
 }
 
-
 function CollectionTodo({collectionId  ,collection} ){
+
 const { singleCollection ,createCollectionTodoLoading  } = useAppContext();
 const [showEditInput , setShowEditInput] = useState(null);
   return(<>
@@ -176,16 +176,18 @@ const [showEditInput , setShowEditInput] = useState(null);
 }
 function TodoForm({id}) {
 
+
 const [text ,setText] = useState("");
 const [loading , setLoading] =useState(false);
 const { fetchCollectionTodo , setCreateCollectionTodoLoading}=  useAppContext();
 
 const handleSubmit = async  (e)=>{
+
   e.preventDefault()
   try {
     setLoading(true)
     setCreateCollectionTodoLoading(true)
-    const response = await axios.post(`https://todo-server-six-ashen.vercel.app/collection/todo/create/${id}` , { text} , {
+    const response = await axios.post(`${origin}/collection/todo/create/${id}` , { text} , {
       withCredentials:true,
       headers:{
         "Content-Type":"application/json" 
@@ -245,11 +247,12 @@ const [deleteLoading , setDeleteLoading] = useState(false)
 const [updateTextLoading  ,setUpdateTextLoading] =useState(false) 
 
 const {createCollectionTodoLoading} = useAppContext()
+
   const deleteTodo = async ()=>{
     try {
       setDeleteLoading(true)
       // http://localhost:2000/collection/todo/67a4a0e0f93a3aecec68849e/delete/67a702c7b698fe314d63bdf5
-      const response = await axios.delete(`https://todo-server-six-ashen.vercel.app/collection/todo/${collectionId}/delete/${_id}` , {withCredentials:true}) 
+      const response = await axios.delete(`${origin}/collection/todo/${collectionId}/delete/${_id}` , {withCredentials:true}) 
       const data =await response.data;
       console.log(data);
       if(data) fetchCollectionTodo(collectionId)
@@ -260,9 +263,10 @@ const {createCollectionTodoLoading} = useAppContext()
   }
 
   const todocompeleted = async()=>{
+
     try {
       // http://localhost:2000/collection/todo/67ab0c82631806baa20b7a00/update/67ab0cb5631806baa20b7c69
-      const response = await  axios.put(`https://todo-server-six-ashen.vercel.app/collection/todo/${collectionId}/update/${_id}` , { 
+      const response = await  axios.put(`${origin}/collection/todo/${collectionId}/update/${_id}` , { 
         completed  : completed === true ? false :true
       },
   
@@ -289,7 +293,7 @@ const {createCollectionTodoLoading} = useAppContext()
     e.preventDefault();
     try {
       setUpdateTextLoading(true)
-      const response = await axios.put(`https://todo-server-six-ashen.vercel.app/collection/todo/${collectionId}/update/${_id}` , {
+      const response = await axios.put(`${origin}/collection/todo/${collectionId}/update/${_id}` , {
         text :newText
       } ,
       {
@@ -321,7 +325,8 @@ const {createCollectionTodoLoading} = useAppContext()
   {/* Check box */}
 
   <div  className="md:h-[30px] h-[25px]  md:w-[30px] w-[25px] flex justify-center items-center">
-    <input onClick={todocompeleted} checked={completed} type="checkbox" className="md:scale-[2] scale-[1.5] cursor-pointer" />
+
+    <input onClick={todocompeleted} checked={completed} type="checkbox" className="md:scale-[2] scale-[1.5] cursor-pointer accent-[#2cd14a]" />
   </div>
 
   {/* Todo Text and date (Expands dynamically) */}
@@ -383,6 +388,7 @@ className="md:h-[45px] h-[37px] show-collection-edit-name w-full origin-left abs
 </motion.div>
   </>)
 } 
+
 function CollectionTodoPageSkeleton() {
   return(<>
 <div className=" w-fill md:w-[40%] ">

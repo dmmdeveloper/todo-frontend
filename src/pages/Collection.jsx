@@ -4,14 +4,14 @@ import { useAppContext } from "../context/AppContex";
 import axios from "axios";
 import { formatCreatedAt } from "../utils/ConvertIntoSimpleTime.js";
 import { Link } from "react-router-dom";
+import origin from "../config/index.js";
 
 export default function Collection() {
-
+  
   const {  collections } = useAppContext();
   const [nameEditongId , setNameEditingId] = useState(null)
 
   return (
-
     <>
       <div className="min-h-screen h-auto w-full bg-myBlue pb-9">
         <Nav />
@@ -55,6 +55,7 @@ export default function Collection() {
 }
 
 function CreateCollection() {
+
   const [openCollectionNameInput, setOpenCollectionNameInput] = useState(false);
   const [name, setInput] = useState("");
   const [loading , setLoading] =useState(false)
@@ -63,13 +64,14 @@ function CreateCollection() {
 
   const handleSubmit = async (e) => {
 
+
     e.preventDefault();
     try {
       setLoading(true)
       // http://localhost:2000/collection/create
       const response = await axios.post(
         // `http://localhost:2000/collection/create`,
-        `https://todo-server-six-ashen.vercel.app/collection/create`,
+        `${origin}/collection/create`,
         { name },
         {
           withCredentials:true,
@@ -163,6 +165,7 @@ if(data){
 
 function CollectionItem({ name, id, time, todos   ,nameEditongId , setNameEditingId }) {
 
+
   const { fetchCollections } = useAppContext();
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [actionType, setActionType] = useState(""); // Track which action (Select/Unselect)
@@ -175,9 +178,8 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
   const progressPercentage = todos.length === 0 ? 0 : (completed / todos.length) * 100;
 
   const unCompletedAllTodos = async () => {
-  
     try {
-      const response = await axios.put(`https://todo-server-six-ashen.vercel.app/collection/uncompleted/${id}`, { withCredentials: true });
+      const response = await axios.put(`${origin}/collection/uncompleted/${id}`, { withCredentials: true });
       const data = response.data;
       console.log(data);
       if (data) fetchCollections();
@@ -187,9 +189,8 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
   };
 
   const completedAllTodos = async () => {
-
     try {
-      const response = await axios.put(`https://todo-server-six-ashen.vercel.app/collection/completed/${id}`, { withCredentials: true });
+      const response = await axios.put(`${origin}/collection/completed/${id}`, { withCredentials: true });
       const data = response.data;
       console.log(data);
       if (data) fetchCollections();
@@ -202,7 +203,7 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
       setLoadingDelete(true)
       const response = await axios.delete(
         // `http://localhost:2000/collection/delete/${id}`
-        `https://todo-server-six-ashen.vercel.app/collection/delete/${id}`
+        `${origin}/collection/delete/${id}`
          , { withCredentials : true})
       const data = await response.data;
       console.log(data);
@@ -228,11 +229,12 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
 
   // http://localhost:2000/collection/edit-name/67a49ba3f93a3aecec66a005
   const editName = async (e)=>{
+
     e.preventDefault()
     try {
       
       setNewNameSavedLoading(true)
-      const response = await axios.put(`https://todo-server-six-ashen.vercel.app/collection/edit-name/${id}` , {
+      const response = await axios.put(`${origin}/collection/edit-name/${id}` , {
         text  : newName
       } , 
       {
@@ -390,7 +392,6 @@ const [newNameSavedLoading , setNewNameSavedLoading] = useState(false)
     </>
   );
 }
-
 
 
 const CollectionSkeleton = () => {
