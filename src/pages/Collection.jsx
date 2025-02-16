@@ -397,9 +397,8 @@ const [isDelete , setIsDelete] = useState(false);
 
 
 <div className="bg-myBlue select-all-permision-popup border-[2px] rounded-lg p-5 w-[300px] text-center shadow-lg">
-  <p className="text-[14px] font-semibold">
-    Are You Sure For Deleting a Collection?
-  </p>
+<h2 className="text-start text-xl font-bold flex" > <span className="" >Delete</span> <span className="text-red-700 font-normal" >*</span><input value={name} readOnlytype="text" className="flex-1 w-[80%] bg-transparent outline-none truncate border-none"  />?</h2>
+<p className="text-myWhite text-sm text-justify mt-1"  >Are you sure you want to delete <span className="font-bold" >{name.slice(0,5)}</span>? </p>
   <div className="flex justify-around mt-4">
     <button
       className="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded"
