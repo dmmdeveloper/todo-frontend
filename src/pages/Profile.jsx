@@ -8,27 +8,44 @@ import origin from '../config';
 
 export default function Profile() {
 
-const {  profile ,todos , logOut , logOutLoading } =  useAppContext();
+const {  profile ,todos , logOut , logOutLoading , collections } =  useAppContext();
 
 const [showEdit ,setShowEdit] = useState(false) 
+const [CollectionData , setCollectionData] = useState(null)
 
 const CompletedTodos  = todos.filter((t)=> t.completed === true).length;
 const remainingTodos = todos.filter( (t)=> t.completed === false ).length;
+
+const fetchTotalCollection = async ()=>{  
+
+  try {
+    const {data} =await axios.get(`${import.meta.env.VITE_ORIGIN}/collection/total` , { withCredentials :true })
+    setCollectionData(data.data)
+    console.log(data.data);
+    
+    
+  } catch (error) {
+    
+    console.log("Total Collection Are Not Fetched :)" ,error);
+    
+  }
+
+}
+
+useEffect(()=>{
+  fetchTotalCollection()
+}, [])
 
   return (<>
 {/* {todos.length} */}
   <div  className="min-h-screen h-auto w-full bg-myBlue text-myWhite flex justify-center items-center ">
 
 {/* Back */}
-
 <Link to={"/"} className="md:h-[60px] md:w-[60px] h-[45px] w-[45px]  md:border-[2px] border  fixed top-1 left-1 flex justify-center items-center rounded-full">
-
   <div className="md:h-[52px] md:w-[52px] h-[40px] w-[40px] hover:justify-end  bg-white  rounded-full flex justify-center items-center rotate-180" >
   <i class="fa-solid fa-arrow-right text-myBlue md:text-[30px] text-[20px]"></i>
   </div> 
 </Link>
-
-
 
 
 
@@ -58,16 +75,15 @@ const remainingTodos = todos.filter( (t)=> t.completed === false ).length;
         </td>
    <td class="border border-white px-2 py-2">
            <ul>
-            <li className='flex items-center text-[15px] md:text-[18px]' > <div className='h-[10px] mr-1 w-[10px] rounded-full bg-white' ></div> <span className='text-myHalfWhite'>Total Collections </span> : ~</li>
-            <li className='flex items-center text-[15px] md:text-[18px]' > <div className='h-[10px] mr-1 w-[10px] rounded-full bg-white' ></div> <span className='text-myHalfWhite'>Total Todos </span> : ~
+            <li className='flex items-center text-[15px] md:text-[18px]' > <div className='h-[10px] mr-1 w-[10px] rounded-full bg-white' ></div> <span className='text-myHalfWhite'>Total Collections </span> : {CollectionData?.collections
+            }</li>
+            <li className='flex items-center text-[15px] md:text-[18px]' > <div className='h-[10px] mr-1 w-[10px] rounded-full bg-white' ></div> <span className='text-myHalfWhite'>Total Todos </span> : {CollectionData?.totalObjects}
             </li>
-            <li className='flex items-center text-[15px] md:text-[18px]' > <div className='h-[10px] mr-1 w-[10px] rounded-full bg-white' ></div> <span className='text-myHalfWhite'>Completed Todos </span> :~</li>
-            <li className='flex items-center text-[15px] md:text-[18px]' > <div className='h-[10px] mr-1 w-[10px] rounded-full bg-white' ></div> <span className='text-myHalfWhite'>Remaining Todos </span> : ~</li>
+            <li className='flex items-center text-[15px] md:text-[18px]' > <div className='h-[10px] mr-1 w-[10px] rounded-full bg-white' ></div> <span className='text-myHalfWhite'>Completed Todos </span> : {CollectionData?.trueObject}</li>
+            <li className='flex items-center text-[15px] md:text-[18px]' > <div className='h-[10px] mr-1 w-[10px] rounded-full bg-white' ></div> <span className='text-myHalfWhite'>Remaining Todos </span> : {CollectionData?.falseObjects}</li>
           </ul>
         </td>        
-
       </tr>
-
     </tbody>
   </table>
 </div>
