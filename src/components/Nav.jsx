@@ -81,9 +81,9 @@ const {logOut  ,logOutLoading , profile ,changeMode , modeLoading } = useAppCont
             <i className="fa-solid fa-user text-myBlue"></i>
             Profile
           </Link>
-          <Link className="text-myBlue flex gap-3 items-center text-center text-[20px] p-2 w-[100%] hover:bg-blue-200">
+          {/* <Link className="text-myBlue flex gap-3 items-center text-center text-[20px] p-2 w-[100%] hover:bg-blue-200">
             <i className="fa-solid fa-clock-rotate-left text-myBlue"></i> History
-          </Link>
+          </Link> */}
           {
             profile?.mode ==="general"?
             <Link onClick={()=>changeMode("collection")} className="text-myBlue text-[20px] flex gap-2 items-center text-center p-2 w-[100%] hover:bg-blue-200">
